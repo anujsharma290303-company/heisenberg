@@ -1,0 +1,52 @@
+[
+  {
+    "id": "q-001",
+    "text": "I am not in danger, Skyler. I am the danger.",
+    "speaker": "Walter White",
+    "characterId": "walt",
+    "season": 4,
+    "episode": "S04E06",
+    "tone": "menacing",
+    "contextNote": "Walt asserts dominance during escalating pressure at home and in the drug trade."
+  },
+  {
+    "id": "q-002",
+    "text": "Yeah, Mr. White! Yeah, science!",
+    "speaker": "Jesse Pinkman",
+    "characterId": "jesse",
+    "season": 1,
+    "episode": "S01E07",
+    "tone": "humorous",
+    "contextNote": "Jesse celebrates the chemistry breakthrough with chaotic enthusiasm."
+  },
+  {
+    "id": "q-003",
+    "text": "I hide in plain sight, same as you.",
+    "speaker": "Gustavo Fring",
+    "characterId": "gus",
+    "season": 4,
+    "episode": "S04E01",
+    "tone": "reflective",
+    "contextNote": "Gus reveals strategic parallels between his facade and Walt's double life."
+  },
+  {
+    "id": "q-004",
+    "text": "You got one part of that wrong. This is not meth.",
+    "speaker": "Walter White",
+    "characterId": "walt",
+    "season": 1,
+    "episode": "S01E06",
+    "tone": "menacing",
+    "contextNote": "The fulminated mercury scene establishes Walt's calculated intimidation."
+  },
+  {
+    "id": "q-005",
+    "text": "Shut the hell up and let me die in peace.",
+    "speaker": "Mike Ehrmantraut",
+    "characterId": "mike",
+    "season": 5,
+    "episode": "S05E07",
+    "tone": "vulnerable",
+    "contextNote": "Mike's final words confront Walt with the cost of his ego."
+  }
+]

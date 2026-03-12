@@ -1,0 +1,42 @@
+:root {
+  --color-void: #080808;
+  --color-surface: #0f0f0f;
+  --color-crystal: #4fc3f7;
+  --color-hat: #d4a017;
+  --color-paper: #e8e2d5;
+  --color-smoke: #444444;
+  --color-ghost: #777777;
+  --color-danger: #c0392b;
+  --color-green: #27ae60;
+  --color-grain: rgba(255, 255, 255, 0.028);
+
+  --space-2xs: clamp(0.25rem, 0.24rem + 0.05vw, 0.3rem);
+  --space-xs: clamp(0.5rem, 0.48rem + 0.1vw, 0.625rem);
+  --space-sm: clamp(0.75rem, 0.72rem + 0.15vw, 0.9rem);
+  --space-md: clamp(1rem, 0.96rem + 0.2vw, 1.25rem);
+  --space-lg: clamp(1.5rem, 1.44rem + 0.3vw, 1.875rem);
+  --space-xl: clamp(2rem, 1.92rem + 0.4vw, 2.5rem);
+  --space-2xl: clamp(3rem, 2.88rem + 0.6vw, 3.75rem);
+  --space-3xl: clamp(4rem, 3.84rem + 0.8vw, 5rem);
+
+  --font-size-xs: clamp(0.75rem, 0.73rem + 0.1vw, 0.875rem);
+  --font-size-sm: clamp(0.875rem, 0.85rem + 0.12vw, 1rem);
+  --font-size-md: clamp(1rem, 0.96rem + 0.2vw, 1.25rem);
+  --font-size-lg: clamp(1.25rem, 1.18rem + 0.35vw, 1.75rem);
+  --font-size-xl: clamp(1.75rem, 1.61rem + 0.7vw, 2.5rem);
+  --font-size-2xl: clamp(2.5rem, 2.2rem + 1.5vw, 4rem);
+  --font-size-display: clamp(3rem, 2.35rem + 3.2vw, 6rem);
+
+  --tracking-display: 0.04em;
+  --tracking-mono: 0.2em;
+  --tracking-wide: 0.35em;
+
+  --motion-fast: 180ms;
+  --motion-medium: 320ms;
+  --motion-slow: 550ms;
+  --ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-emphasis: cubic-bezier(0.18, 0.89, 0.32, 1.28);
+
+  --grain-opacity-normal: 0.028;
+  --grain-opacity-elevated: 0.07;
+}

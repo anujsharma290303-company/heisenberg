@@ -1,0 +1,58 @@
+[
+  {
+    "symbol": "C",
+    "name": "Carbon",
+    "num": 6,
+    "color": "#4FC3F7",
+    "note": "Backbone element in organic structures and methamphetamine chains."
+  },
+  {
+    "symbol": "H",
+    "name": "Hydrogen",
+    "num": 1,
+    "color": "#E8E2D5",
+    "note": "Lightest element, stabilizing molecular geometry and bonding."
+  },
+  {
+    "symbol": "N",
+    "name": "Nitrogen",
+    "num": 7,
+    "color": "#27AE60",
+    "note": "Key to amine groups that shape behavior of stimulant compounds."
+  },
+  {
+    "symbol": "P",
+    "name": "Phosphorus",
+    "num": 15,
+    "color": "#D4A017",
+    "note": "Selecting P pivots the explorer to phosphine chemistry."
+  },
+  {
+    "symbol": "Ba",
+    "name": "Barium",
+    "num": 56,
+    "color": "#C0392B",
+    "note": "Selecting Ba routes to barium chloride for reaction context."
+  },
+  {
+    "symbol": "Cl",
+    "name": "Chlorine",
+    "num": 17,
+    "color": "#777777",
+    "note": "Reactive halogen used in salts and industrial compounds."
+  },
+  {
+    "symbol": "Br",
+    "name": "Bromine",
+    "num": 35,
+    "color": "#444444",
+    "note": "Dense halogen tied to hazardous reaction pathways."
+  },
+  {
+    "symbol": "Hg",
+    "name": "Mercury",
+    "num": 80,
+    "color": "#9B59B6",
+    "note": "Heavy metal echoing high-risk chemistry and toxicity."
+  }
+]
