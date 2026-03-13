@@ -8,9 +8,10 @@
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
   color: var(--color-crystal);
-  clip-path: inset(5% 0 70% 0);
-  transform: translateX(-4px) skewX(-2deg);
+  clip-path: inset(0% 0 0% 0);
+  transform: translateX(0) skewX(0deg);
   mix-blend-mode: screen;
   opacity: 0;
   pointer-events: none;
@@ -21,20 +22,86 @@
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
   color: var(--color-danger);
-  clip-path: inset(65% 0 5% 0);
-  transform: translateX(4px) skewX(2deg);
+  clip-path: inset(0% 0 0% 0);
+  transform: translateX(0) skewX(0deg);
   mix-blend-mode: screen;
   opacity: 0;
   pointer-events: none;
 }
 
+.active {
+  animation: glitch-main 0.35s steps(2, end) infinite;
+}
+
 .active::before {
-  opacity: 1;
-  animation: glitch-top 0.4s steps(3, end) infinite;
+  opacity: 0.85;
+  animation: glitch-top 0.35s steps(3, end) infinite;
 }
 
 .active::after {
-  opacity: 1;
-  animation: glitch-bot 0.4s steps(3, end) infinite reverse;
+  opacity: 0.85;
+  animation: glitch-bot 0.35s steps(3, end) infinite reverse;
+}
+
+@keyframes glitch-main {
+  0% {
+    transform: translateX(0) skewX(0deg);
+  }
+  33% {
+    transform: translateX(-2px) skewX(-3deg);
+  }
+  66% {
+    transform: translateX(2px) skewX(3deg);
+  }
+  100% {
+    transform: translateX(0) skewX(0deg);
+  }
+}
+
+@keyframes glitch-top {
+  0% {
+    clip-path: inset(10% 0 75% 0);
+    transform: translateX(-6px) skewX(-5deg);
+  }
+  25% {
+    clip-path: inset(5% 0 60% 0);
+    transform: translateX(7px) skewX(4deg);
+  }
+  50% {
+    clip-path: inset(30% 0 40% 0);
+    transform: translateX(-7px) skewX(-4deg);
+  }
+  75% {
+    clip-path: inset(15% 0 70% 0);
+    transform: translateX(6px) skewX(5deg);
+  }
+  100% {
+    clip-path: inset(20% 0 65% 0);
+    transform: translateX(-5px) skewX(-3deg);
+  }
+}
+
+@keyframes glitch-bot {
+  0% {
+    clip-path: inset(70% 0 8% 0);
+    transform: translateX(6px) skewX(5deg);
+  }
+  25% {
+    clip-path: inset(55% 0 5% 0);
+    transform: translateX(-7px) skewX(-4deg);
+  }
+  50% {
+    clip-path: inset(75% 0 12% 0);
+    transform: translateX(7px) skewX(4deg);
+  }
+  75% {
+    clip-path: inset(65% 0 6% 0);
+    transform: translateX(-6px) skewX(-5deg);
+  }
+  100% {
+    clip-path: inset(68% 0 10% 0);
+    transform: translateX(5px) skewX(3deg);
+  }
 }

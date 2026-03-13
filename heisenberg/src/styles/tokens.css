@@ -28,6 +28,8 @@
   --font-size-display: clamp(3rem, 2.35rem + 3.2vw, 6rem);
   --text-body: var(--font-size-md);
   --text-display: var(--font-size-display);
+  --text-heading: var(--font-size-2xl);
+  --text-label: var(--font-size-xs);
   --space-4: var(--space-md);
 
   --tracking-display: 0.04em;
