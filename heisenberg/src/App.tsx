@@ -24,8 +24,8 @@ function App() {
           <h1
             style={{
               color: 'var(--color-paper)',
-              fontSize: 'var(--text-display)',
-              fontFamily: 'Bebas Neue',
+              fontSize: 'var(--font-size-display)',
+              fontFamily: 'var(--font-display)',
             }}
           >
             HEISENBERG
