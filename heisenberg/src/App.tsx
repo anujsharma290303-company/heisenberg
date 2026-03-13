@@ -1,4 +1,5 @@
 import { FilmGrain } from './components/canvas/FilmGrain'
+import { DesertCanvas } from './components/canvas/DesertCanvas'
 import { Scanlines } from './components/canvas/Scanlines'
 import { useUIStore } from './stores/useUIStore'
 
@@ -14,6 +15,7 @@ function App() {
           id="section-01"
           className="section"
           style={{
+            position: 'relative',
             minHeight: '100svh',
             background: 'var(--color-void)',
             display: 'flex',
@@ -21,8 +23,11 @@ function App() {
             justifyContent: 'center',
           }}
         >
+          <DesertCanvas />
           <h1
             style={{
+              position: 'relative',
+              zIndex: 1,
               color: 'var(--color-paper)',
               fontSize: 'var(--font-size-display)',
               fontFamily: 'var(--font-display)',
