@@ -5,6 +5,7 @@ import { DesertCanvas } from "./components/canvas/DesertCanvas";
 import { GlitchText } from "./components/ui/GlitchText";
 import { Counter } from "./components/ui/Counter";
 import { Typewriter } from "./components/ui/Typewriter";
+import { DotNav } from "./components/ui/DotNav";
 import { Scanlines } from "./components/canvas/Scanlines";
 import { useUIStore } from "./stores/useUIStore";
 
@@ -16,6 +17,7 @@ function App() {
     <>
       <FilmGrain intensity={grainIntensity} />
       <Scanlines />
+      <DotNav />
 
       <div className="scroll-container">
         <div
