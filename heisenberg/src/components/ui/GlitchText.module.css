@@ -1,0 +1,34 @@
+.glitchText {
+  position: relative;
+  display: inline-block;
+  color: inherit;
+}
+
+.glitchText::before,
+.glitchText::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.glitchText::before {
+  color: var(--color-crystal);
+  clip-path: inset(0 0 48% 0);
+}
+
+.glitchText::after {
+  color: var(--color-danger);
+  clip-path: inset(52% 0 0 0);
+}
+
+.active::before {
+  opacity: 0.9;
+  animation: glitch-top 0.4s steps(2, end);
+}
+
+.active::after {
+  opacity: 0.9;
+  animation: glitch-bot 0.4s steps(2, end);
+}

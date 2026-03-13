@@ -1,5 +1,6 @@
 import { FilmGrain } from './components/canvas/FilmGrain'
 import { DesertCanvas } from './components/canvas/DesertCanvas'
+import { GlitchText } from './components/ui/GlitchText.tsx'
 import { Scanlines } from './components/canvas/Scanlines'
 import { useUIStore } from './stores/useUIStore'
 
@@ -29,11 +30,11 @@ function App() {
               position: 'relative',
               zIndex: 1,
               color: 'var(--color-paper)',
-              fontSize: 'var(--font-size-display)',
-              fontFamily: 'var(--font-display)',
+              fontSize: 'var(--text-display)',
+              fontFamily: "'Bebas Neue', sans-serif",
             }}
           >
-            HEISENBERG
+            <GlitchText>HEISENBERG</GlitchText>
           </h1>
         </div>
       </div>
