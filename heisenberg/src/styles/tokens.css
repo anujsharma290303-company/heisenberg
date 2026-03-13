@@ -31,6 +31,7 @@
   --text-heading: var(--font-size-2xl);
   --text-label: var(--font-size-xs);
   --space-4: var(--space-md);
+  --space-8: var(--space-lg);
 
   --tracking-display: 0.04em;
   --tracking-mono: 0.2em;

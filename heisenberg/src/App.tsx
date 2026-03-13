@@ -75,14 +75,15 @@ function App() {
                   display: "flex",
                   flexWrap: "wrap",
                   justifyContent: "center",
-                  gap: "var(--space-lg)",
-                  marginTop: "var(--space-lg)",
+                  gap: "var(--space-8)",
+                  marginTop: "var(--space-8)",
                   animation: "fadeUp 0.8s var(--ease-standard)",
                 }}
               >
                 <Counter to={5} label="SEASONS" />
                 <Counter to={62} label="EPISODES" />
-                <Counter to={8} label="ELEMENTS" />
+                <Counter to={16} label="EMMY AWARDS" suffix="+" />
+                <Counter to={9} label="IMDB RATING" suffix=".5/10" />
               </div>
             ) : null}
           </div>

@@ -13,7 +13,7 @@ export function GlitchText({
   children,
   always = false,
   className,
-  duration = 400,
+  duration = 300,
   intervalMs,
 }: GlitchTextProps) {
   const { isGlitching, trigger } = useGlitch({ always, duration, intervalMs });
