@@ -1,34 +1,40 @@
-.glitchText {
+.glitch {
   position: relative;
   display: inline-block;
-  color: inherit;
 }
 
-.glitchText::before,
-.glitchText::after {
+.glitch::before {
   content: attr(data-text);
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  color: var(--color-crystal);
+  clip-path: inset(5% 0 70% 0);
+  transform: translateX(-4px) skewX(-2deg);
+  mix-blend-mode: screen;
   opacity: 0;
   pointer-events: none;
 }
 
-.glitchText::before {
-  color: var(--color-crystal);
-  clip-path: inset(0 0 48% 0);
-}
-
-.glitchText::after {
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
   color: var(--color-danger);
-  clip-path: inset(52% 0 0 0);
+  clip-path: inset(65% 0 5% 0);
+  transform: translateX(4px) skewX(2deg);
+  mix-blend-mode: screen;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .active::before {
-  opacity: 0.9;
-  animation: glitch-top 0.4s steps(2, end);
+  opacity: 1;
+  animation: glitch-top 0.4s steps(3, end) infinite;
 }
 
 .active::after {
-  opacity: 0.9;
-  animation: glitch-bot 0.4s steps(2, end);
+  opacity: 1;
+  animation: glitch-bot 0.4s steps(3, end) infinite reverse;
 }

@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 export interface UseGlitchOptions {
   duration?: number;
   always?: boolean;
+  intervalMs?: number;
 }
 
 export interface UseGlitchResult {
@@ -17,6 +18,7 @@ const randomInRange = (min: number, max: number): number => {
 export const useGlitch = (options: UseGlitchOptions = {}): UseGlitchResult => {
   const duration = options.duration ?? 400;
   const always = options.always ?? false;
+  const intervalMs = options.intervalMs;
 
   const [isGlitching, setIsGlitching] = useState(false);
   const isGlitchingRef = useRef(false);
@@ -52,7 +54,7 @@ export const useGlitch = (options: UseGlitchOptions = {}): UseGlitchResult => {
     }
 
     const schedule = (): void => {
-      const delay = randomInRange(3000, 7000);
+      const delay = intervalMs ?? randomInRange(3000, 7000);
       loopTimerRef.current = setTimeout(() => {
         trigger();
         schedule();
@@ -67,7 +69,7 @@ export const useGlitch = (options: UseGlitchOptions = {}): UseGlitchResult => {
         loopTimerRef.current = null;
       }
     };
-  }, [always, trigger]);
+  }, [always, intervalMs, trigger]);
 
   useEffect(() => {
     return () => {

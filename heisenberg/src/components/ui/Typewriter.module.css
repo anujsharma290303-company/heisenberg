@@ -1,0 +1,10 @@
+.root {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.cursor {
+  color: var(--color-hat);
+  animation: blink 1s step-end infinite;
+  margin-left: 0.06em;
+}

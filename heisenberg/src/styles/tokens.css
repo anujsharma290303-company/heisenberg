@@ -26,7 +26,9 @@
   --font-size-xl: clamp(1.75rem, 1.61rem + 0.7vw, 2.5rem);
   --font-size-2xl: clamp(2.5rem, 2.2rem + 1.5vw, 4rem);
   --font-size-display: clamp(3rem, 2.35rem + 3.2vw, 6rem);
+  --text-body: var(--font-size-md);
   --text-display: var(--font-size-display);
+  --space-4: var(--space-md);
 
   --tracking-display: 0.04em;
   --tracking-mono: 0.2em;
