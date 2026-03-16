@@ -102,11 +102,15 @@ export function MoleculeCanvas({ molecule, className, width = 960, height = 480 
         rotationRef.current.y += AUTO_ORBIT_STEP;
       }
 
+      // 1) Rotation matrices, 2) projection
       const projected = molecule.atoms
         .map((atom, index) => rotateAndProject(atom, index, canvas.width, canvas.height, rotationRef.current));
 
+      // 3) Depth sort (far first, near last)
+      const depthSorted = [...projected].sort((a, b) => b.depth - a.depth);
       const projectedByIndex = new Map(projected.map((atom) => [atom.index, atom]));
 
+      // 4) Bonds
       for (const [aIndex, bIndex] of molecule.bonds) {
         const atomA = projectedByIndex.get(aIndex);
         const atomB = projectedByIndex.get(bIndex);
@@ -126,19 +130,8 @@ export function MoleculeCanvas({ molecule, className, width = 960, height = 480 
         ctx.stroke();
       }
 
-      const depthSorted = [...projected].sort((a, b) => b.depth - a.depth);
-
+      // 5) Sphere shading
       for (const atom of depthSorted) {
-        const glowRadius = atom.radius * 3;
-        const glowGradient = ctx.createRadialGradient(atom.sx, atom.sy, atom.radius * 0.2, atom.sx, atom.sy, glowRadius);
-        glowGradient.addColorStop(0, hexToRgba(atom.color, 0.33 * atom.glow));
-        glowGradient.addColorStop(1, hexToRgba(atom.color, 0));
-
-        ctx.beginPath();
-        ctx.fillStyle = glowGradient;
-        ctx.arc(atom.sx, atom.sy, glowRadius, 0, Math.PI * 2);
-        ctx.fill();
-
         const sphereGradient = ctx.createRadialGradient(
           atom.sx - atom.radius * 0.35,
           atom.sy - atom.radius * 0.35,
@@ -155,7 +148,23 @@ export function MoleculeCanvas({ molecule, className, width = 960, height = 480 
         ctx.fillStyle = sphereGradient;
         ctx.arc(atom.sx, atom.sy, atom.radius, 0, Math.PI * 2);
         ctx.fill();
+      }
 
+      // 6) Glow pass (radius 3x atom size)
+      for (const atom of depthSorted) {
+        const glowRadius = atom.radius * 3;
+        const glowGradient = ctx.createRadialGradient(atom.sx, atom.sy, atom.radius * 0.2, atom.sx, atom.sy, glowRadius);
+        glowGradient.addColorStop(0, hexToRgba(atom.color, 0.33 * atom.glow));
+        glowGradient.addColorStop(1, hexToRgba(atom.color, 0));
+
+        ctx.beginPath();
+        ctx.fillStyle = glowGradient;
+        ctx.arc(atom.sx, atom.sy, glowRadius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // 7) Labels last
+      for (const atom of depthSorted) {
         ctx.fillStyle = '#FFFFFF';
         ctx.font = `${Math.max(10, atom.radius * 0.95)}px "IBM Plex Mono"`;
         ctx.textAlign = 'center';
