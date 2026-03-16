@@ -97,11 +97,47 @@
   overflow-y: hidden;
   padding-bottom: var(--space-xs);
   scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--color-hat) 80%, var(--color-crystal) 20%) #121212;
 }
 
 .cardsRow > * {
   flex: 0 0 min(18.5rem, 86vw);
   scroll-snap-align: start;
+}
+
+.cardsRow::-webkit-scrollbar {
+  height: 10px;
+}
+
+.cardsRow::-webkit-scrollbar-track {
+  background: #121212;
+  border: 1px solid #1f1f1f;
+  border-radius: 999px;
+}
+
+.cardsRow::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--color-crystal) 65%, black 35%) 0%,
+    color-mix(in srgb, var(--color-hat) 80%, black 20%) 100%
+  );
+  border-radius: 999px;
+  border: 1px solid #0b0b0b;
+}
+
+.cardsRow::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--color-crystal) 85%, black 15%) 0%,
+    color-mix(in srgb, var(--color-hat) 95%, black 5%) 100%
+  );
+}
+
+.cardsRow::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+  display: none;
 }
 
 .shimmer {
