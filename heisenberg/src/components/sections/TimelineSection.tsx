@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { CharCard } from '../cards/CharCard';
 import { useTypedData } from '../../hooks/useTypedData';
@@ -36,10 +36,11 @@ export function TimelineSection({ className }: TimelineSectionProps) {
     };
   }, [setSection]);
 
-  const dataState = useTypedData<Character[]>(async () => {
+  const dataLoader = useCallback(async () => {
     const module = await import('../../data/characters.json');
     return module.default as Character[];
-  });
+  }, []);
+  const dataState = useTypedData<Character[]>(dataLoader);
 
   const rootClasses = ['section', styles.sectionRoot, revealed ? styles.revealed : '', className]
     .filter(Boolean)

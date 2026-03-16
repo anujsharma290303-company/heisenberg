@@ -270,7 +270,10 @@ describe('QuotesSection', () => {
   });
 
   it('mounts QuotesSection after TimelineSection inside scroll container', () => {
+    // App.tsx now also calls useTypedData once (character resolver for QuoteReveal).
+    // Render order: App (#1) → QuotesSection quotes (#2) → QuotesSection characters (#3).
     mockedUseTypedData
+      .mockReturnValueOnce({ status: 'idle' })
       .mockReturnValueOnce({ status: 'success', data: quotesFixture, loadedAt: new Date() })
       .mockReturnValueOnce({ status: 'success', data: charactersFixture, loadedAt: new Date() });
 

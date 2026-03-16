@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 type FilterMap<T> = Partial<T>;
 
@@ -18,7 +18,7 @@ export const useQuoteFilter = <T extends object>(
 ): UseQuoteFilterResult<T> => {
   const [filters, setFilters] = useState<FilterMap<T>>({});
 
-  const setFilter = <K extends keyof T>(
+  const setFilter = useCallback(<K extends keyof T>(
     key: K,
     value: T[K] | null | undefined
   ): void => {
@@ -34,7 +34,7 @@ export const useQuoteFilter = <T extends object>(
         [key]: value,
       };
     });
-  };
+  }, []);
 
   const filtered = useMemo(() => {
     const entries = Object.entries(filters) as Array<[keyof T, T[keyof T]]>;
@@ -48,17 +48,17 @@ export const useQuoteFilter = <T extends object>(
     });
   }, [data, filters]);
 
-  const resetFilters = (): void => {
+  const resetFilters = useCallback((): void => {
     setFilters({});
-  };
+  }, []);
 
-  const setTone = ((tone: T extends { tone: infer U } ? U : never) => {
+  const setTone = useCallback(((tone: T extends { tone: infer U } ? U : never) => {
     setFilter('tone' as keyof T, tone as T[keyof T]);
-  }) as UseQuoteFilterResult<T>['setTone'];
+  }) as UseQuoteFilterResult<T>['setTone'], [setFilter]);
 
-  const setCharacterId = ((characterId: T extends { characterId: infer U } ? U : never) => {
+  const setCharacterId = useCallback(((characterId: T extends { characterId: infer U } ? U : never) => {
     setFilter('characterId' as keyof T, characterId as T[keyof T]);
-  }) as UseQuoteFilterResult<T>['setCharacterId'];
+  }) as UseQuoteFilterResult<T>['setCharacterId'], [setFilter]);
 
   return {
     filtered,

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { QuoteCard } from '../cards/QuoteCard';
 import { useQuoteFilter } from '../../hooks/useQuoteFilter';
@@ -41,15 +41,17 @@ export function QuotesSection({ className }: QuotesSectionProps) {
     };
   }, [setSection]);
 
-  const quotesState = useTypedData<Quote[]>(async () => {
+  const quotesLoader = useCallback(async () => {
     const module = await import('../../data/quotes.json');
     return module.default as Quote[];
-  });
+  }, []);
+  const quotesState = useTypedData<Quote[]>(quotesLoader);
 
-  const charactersState = useTypedData<Character[]>(async () => {
+  const charactersLoader = useCallback(async () => {
     const module = await import('../../data/characters.json');
     return module.default as Character[];
-  });
+  }, []);
+  const charactersState = useTypedData<Character[]>(charactersLoader);
 
   const baseQuotes = quotesState.status === 'success' ? quotesState.data : [];
   const { filtered, resultCount, setFilter, setTone, setCharacterId } = useQuoteFilter<Quote>(baseQuotes);

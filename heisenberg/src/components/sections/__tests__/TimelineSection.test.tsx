@@ -38,6 +38,14 @@ vi.mock('../HeroSection', () => ({
   HeroSection: () => <section id="section-01" data-testid="hero-section" />,
 }));
 
+vi.mock('../QuotesSection', () => ({
+  QuotesSection: () => <section id="section-03" data-testid="quotes-section" />,
+}));
+
+vi.mock('../../overlays/QuoteReveal', () => ({
+  QuoteReveal: () => null,
+}));
+
 vi.mock('../../../stores/useUIStore', () => ({
   useUIStore: vi.fn((selector) =>
     selector({
@@ -171,7 +179,7 @@ describe('TimelineSection', () => {
 
   it('shows error state with retry button and retries loader on click', () => {
     const retrySpy = vi.fn();
-    mockedUseTypedData.mockReturnValue({
+    mockedUseTypedData.mockReturnValueOnce({
       status: 'error',
       error: new Error('failed to load'),
       retry: retrySpy,
