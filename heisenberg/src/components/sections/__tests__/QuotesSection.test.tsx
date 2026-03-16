@@ -7,6 +7,7 @@ import { useTypedData } from '../../../hooks/useTypedData';
 import type { Character } from '../../../types/character';
 import type { Quote } from '../../../types/quote';
 import { QuotesSection } from '../QuotesSection.tsx';
+import { useExplorerStore } from '../../../stores/useExplorerStore';
 
 vi.mock('../../../hooks/useTypedData', () => ({
   useTypedData: vi.fn(),
@@ -56,6 +57,33 @@ vi.mock('../../../stores/useUIStore', () => ({
       setSection: vi.fn(),
       setGrainIntensity: vi.fn(),
     })
+  ),
+}));
+
+vi.mock('../../ui/ToneFilterBar', () => ({
+  ToneFilterBar: ({ active, onSelect }: { active: string; onSelect: (t: string) => void }) => (
+    <div data-testid="tone-filter-bar" data-active={active}>
+      <button data-testid="tone-pill-trigger" onClick={() => onSelect('menacing')}>
+        MENACING
+      </button>
+    </div>
+  ),
+}));
+
+vi.mock('../../ui/CharacterChip', () => ({
+  CharacterChip: ({
+    character,
+    onClear,
+  }: {
+    character: { name: string; id: string };
+    onClear: () => void;
+  }) => (
+    <div data-testid="character-chip">
+      <span data-testid="chip-name">{character.name}</span>
+      <button data-testid="chip-clear" onClick={onClear}>
+        ×
+      </button>
+    </div>
   ),
 }));
 
@@ -109,6 +137,7 @@ const charactersFixture: Character[] = [
 describe('QuotesSection', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    useExplorerStore.setState({ selectedChar: null, toneFilter: 'all', activeQuote: null });
 
     class IntersectionObserverMock {
       observe = vi.fn();
@@ -298,5 +327,53 @@ describe('QuotesSection', () => {
 
     expect(container.querySelector('[data-testid="section-03-placeholder"]')).toBeNull();
     expect(container.querySelector('#section-03')).not.toBeNull();
+  });
+  
+    it('renders ToneFilterBar inside the section', () => {
+    mockedUseTypedData.mockReturnValue({ status: 'loading' } as never);
+    render(<QuotesSection />);
+    expect(screen.getByTestId('tone-filter-bar')).toBeInTheDocument();
+  });
+
+  it('passes toneFilter from useExplorerStore as active prop to ToneFilterBar', () => {
+    useExplorerStore.setState({ toneFilter: 'menacing' });
+    mockedUseTypedData.mockReturnValue({ status: 'loading' } as never);
+    render(<QuotesSection />);
+    expect(screen.getByTestId('tone-filter-bar')).toHaveAttribute('data-active', 'menacing');
+  });
+
+  it('clicking a ToneFilterBar pill calls setTone on useExplorerStore', () => {
+    mockedUseTypedData.mockReturnValue({ status: 'loading' } as never);
+    render(<QuotesSection />);
+    fireEvent.click(screen.getByTestId('tone-pill-trigger'));
+    expect(useExplorerStore.getState().toneFilter).toBe('menacing');
+  });
+
+  it('does not render CharacterChip when selectedChar is null', () => {
+    mockedUseTypedData.mockReturnValue({ status: 'loading' } as never);
+    render(<QuotesSection />);
+    expect(screen.queryByTestId('character-chip')).not.toBeInTheDocument();
+  });
+
+  it('renders CharacterChip when selectedChar is set', () => {
+    useExplorerStore.setState({ selectedChar: charactersFixture[0]! });
+    mockedUseTypedData.mockReturnValue({ status: 'loading' } as never);
+    render(<QuotesSection />);
+    expect(screen.getByTestId('character-chip')).toBeInTheDocument();
+  });
+
+  it('CharacterChip clear button calls clearChar on useExplorerStore', () => {
+    useExplorerStore.setState({ selectedChar: charactersFixture[0]! });
+    mockedUseTypedData.mockReturnValue({ status: 'loading' } as never);
+    render(<QuotesSection />);
+    fireEvent.click(screen.getByTestId('chip-clear'));
+    expect(useExplorerStore.getState().selectedChar).toBeNull();
+  });
+
+  it('CharacterChip displays selectedChar.name', () => {
+    useExplorerStore.setState({ selectedChar: charactersFixture[0]! });
+    mockedUseTypedData.mockReturnValue({ status: 'loading' } as never);
+    render(<QuotesSection />);
+    expect(screen.getByTestId('chip-name')).toHaveTextContent('Walter White');
   });
 });

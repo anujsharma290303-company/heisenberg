@@ -20,6 +20,11 @@ export const hexToRgb = (hex: string): RGB => {
   };
 };
 
+export const hexToRgba = (hex: string, alpha: number): string => {
+  const { r, g, b } = hexToRgb(hex);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
+
 export const interpolateColor = (a: string, b: string, t: number): string => {
   const from = hexToRgb(a);
   const to = hexToRgb(b);

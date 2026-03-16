@@ -91,3 +91,15 @@
 .revealed {
   animation: fadeIn var(--motion-medium) var(--ease-standard);
 }
+
+.controlBar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.filterRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}

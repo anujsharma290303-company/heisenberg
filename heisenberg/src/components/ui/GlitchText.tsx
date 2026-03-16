@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import styles from './GlitchText.module.css';
 import { useGlitch } from '../../hooks/useGlitch';
 
@@ -5,6 +6,7 @@ export interface GlitchTextProps {
   children: string;
   always?: boolean;
   className?: string;
+  style?: CSSProperties;
   duration?: number;
   intervalMs?: number;
 }
@@ -13,6 +15,7 @@ export function GlitchText({
   children,
   always = false,
   className,
+  style,
   duration = 300,
   intervalMs,
 }: GlitchTextProps) {
@@ -30,6 +33,7 @@ export function GlitchText({
   return (
     <span
       className={classes}
+      style={style}
       data-text={children}
       onMouseEnter={() => {
         if (!always) {

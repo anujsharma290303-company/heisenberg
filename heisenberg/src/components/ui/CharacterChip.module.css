@@ -1,0 +1,35 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-mono);
+}
+
+.name {
+  font-weight: 600;
+}
+
+.clear {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: var(--text-label);
+  line-height: 1;
+  opacity: 0.7;
+  padding: 0;
+  transition: opacity 0.2s var(--ease-reveal);
+}
+
+.clear:hover {
+  opacity: 1;
+}
+
+.clear:focus-visible {
+  outline: 2px solid var(--color-crystal);
+  outline-offset: 2px;
+}

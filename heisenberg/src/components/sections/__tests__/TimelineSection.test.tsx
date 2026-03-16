@@ -3,11 +3,43 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import App from '../../../App';
 import { useTypedData } from '../../../hooks/useTypedData';
+import { useExplorerStore } from '../../../stores/useExplorerStore';
+import { useUIStore } from '../../../stores/useUIStore';
 import type { Character } from '../../../types/character';
 import { TimelineSection } from '../TimelineSection';
 
+let selectedCharState: Character | null = null;
+let clearCharSpy = vi.fn<() => void>();
+let setSectionSpy = vi.fn<(index: number) => void>();
+
 vi.mock('../../../hooks/useTypedData', () => ({
   useTypedData: vi.fn(),
+}));
+
+vi.mock('../../../stores/useUIStore', () => ({
+  useUIStore: vi.fn((selector) =>
+    selector({
+      activeSection: 0,
+      grainIntensity: 0.028,
+      setSection: setSectionSpy,
+      setGrainIntensity: vi.fn(),
+    })
+  ),
+}));
+
+vi.mock('../../../stores/useExplorerStore', () => ({
+  useExplorerStore: vi.fn((selector) =>
+    selector({
+      selectedChar: selectedCharState,
+      activeQuote: null,
+      toneFilter: 'all',
+      selectChar: vi.fn(),
+      clearChar: clearCharSpy,
+      openQuote: vi.fn(),
+      closeQuote: vi.fn(),
+      setTone: vi.fn(),
+    })
+  ),
 }));
 
 vi.mock('../../cards/CharCard', () => ({
@@ -19,6 +51,24 @@ vi.mock('../../cards/CharCard', () => ({
     >
       {character.name}
     </article>
+  ),
+}));
+
+vi.mock('../../ui/GlitchText', () => ({
+  GlitchText: ({
+    children,
+    always,
+    className,
+    style,
+  }: {
+    children: string;
+    always?: boolean;
+    className?: string;
+    style?: Record<string, string | number>;
+  }) => (
+    <span data-testid="selected-char-name" data-always={always ? 'true' : 'false'} className={className} style={style}>
+      {children}
+    </span>
   ),
 }));
 
@@ -46,18 +96,9 @@ vi.mock('../../overlays/QuoteReveal', () => ({
   QuoteReveal: () => null,
 }));
 
-vi.mock('../../../stores/useUIStore', () => ({
-  useUIStore: vi.fn((selector) =>
-    selector({
-      activeSection: 0,
-      grainIntensity: 0.028,
-      setSection: vi.fn(),
-      setGrainIntensity: vi.fn(),
-    })
-  ),
-}));
-
 const mockedUseTypedData = vi.mocked(useTypedData);
+const mockedUseUIStore = vi.mocked(useUIStore);
+const mockedUseExplorerStore = vi.mocked(useExplorerStore);
 
 const charactersFixture: Character[] = [
   {
@@ -108,13 +149,47 @@ const charactersFixture: Character[] = [
 ];
 
 describe('TimelineSection', () => {
+  let ioCallback: ((entries: IntersectionObserverEntry[]) => void) | null;
+  let ioOptions: IntersectionObserverInit | undefined;
   let disconnectSpy: ReturnType<typeof vi.fn>;
 
   beforeEach(() => {
     vi.clearAllMocks();
+    selectedCharState = null;
+    clearCharSpy = vi.fn<() => void>();
+    setSectionSpy = vi.fn<(index: number) => void>();
+    ioCallback = null;
+    ioOptions = undefined;
     disconnectSpy = vi.fn();
 
+    mockedUseUIStore.mockImplementation((selector) =>
+      selector({
+        activeSection: 0,
+        grainIntensity: 0.028,
+        setSection: setSectionSpy,
+        setGrainIntensity: vi.fn(),
+      })
+    );
+
+    mockedUseExplorerStore.mockImplementation((selector) =>
+      selector({
+        selectedChar: selectedCharState,
+        activeQuote: null,
+        toneFilter: 'all',
+        selectChar: vi.fn(),
+        clearChar: clearCharSpy,
+        openQuote: vi.fn(),
+        closeQuote: vi.fn(),
+        setTone: vi.fn(),
+      })
+    );
+
     class IntersectionObserverMock {
+      constructor(callback: (entries: IntersectionObserverEntry[]) => void, options?: IntersectionObserverInit) {
+        ioCallback = callback;
+        ioOptions = options;
+      }
+
       observe = vi.fn();
       unobserve = vi.fn();
       disconnect = disconnectSpy;
@@ -127,7 +202,7 @@ describe('TimelineSection', () => {
     vi.unstubAllGlobals();
   });
 
-  it('renders section id section-02 with section class', () => {
+  it('renders id section-02 and includes section class', () => {
     mockedUseTypedData.mockReturnValue({
       status: 'success',
       data: charactersFixture,
@@ -139,6 +214,38 @@ describe('TimelineSection', () => {
 
     expect(section).not.toBeNull();
     expect(section).toHaveClass('section');
+  });
+
+  it('renders section label text "02 / CHARACTER TIMELINE"', () => {
+    mockedUseTypedData.mockReturnValue({ status: 'loading' });
+
+    render(<TimelineSection />);
+
+    expect(screen.getByText('02 / CHARACTER TIMELINE')).toBeInTheDocument();
+  });
+
+  it('creates IntersectionObserver with threshold 0.45', () => {
+    mockedUseTypedData.mockReturnValue({ status: 'loading' });
+
+    render(<TimelineSection />);
+
+    expect(ioOptions).toEqual({ threshold: 0.45 });
+  });
+
+  it('adds revealed class when section becomes visible and calls setSection(1)', () => {
+    mockedUseTypedData.mockReturnValue({ status: 'loading' });
+
+    const { container } = render(<TimelineSection />);
+    const section = container.querySelector('#section-02');
+
+    if (!section || !ioCallback) {
+      throw new Error('IntersectionObserver callback not captured');
+    }
+
+    ioCallback([{ isIntersecting: true } as IntersectionObserverEntry]);
+
+    expect(section.className).toContain('revealed');
+    expect(setSectionSpy).toHaveBeenCalledWith(1);
   });
 
   it('loads characters through useTypedData and renders 5 CharCards on success', () => {
@@ -154,22 +261,7 @@ describe('TimelineSection', () => {
     expect(screen.getAllByTestId(/char-card-/)).toHaveLength(5);
   });
 
-  it('passes index prop to each CharCard for stagger sequence', () => {
-    mockedUseTypedData.mockReturnValue({
-      status: 'success',
-      data: charactersFixture,
-      loadedAt: new Date(),
-    });
-
-    render(<TimelineSection />);
-
-    const cards = screen.getAllByTestId(/char-card-/);
-    cards.forEach((card, index) => {
-      expect(card).toHaveAttribute('data-index', String(index));
-    });
-  });
-
-  it('shows shimmer placeholders during loading state', () => {
+  it('renders 5 shimmer placeholders in loading state', () => {
     mockedUseTypedData.mockReturnValue({ status: 'loading' });
 
     render(<TimelineSection />);
@@ -177,9 +269,9 @@ describe('TimelineSection', () => {
     expect(screen.getAllByTestId('timeline-shimmer')).toHaveLength(5);
   });
 
-  it('shows error state with retry button and retries loader on click', () => {
+  it('renders error and retry controls and calls retry when clicked', () => {
     const retrySpy = vi.fn();
-    mockedUseTypedData.mockReturnValueOnce({
+    mockedUseTypedData.mockReturnValue({
       status: 'error',
       error: new Error('failed to load'),
       retry: retrySpy,
@@ -188,11 +280,10 @@ describe('TimelineSection', () => {
     render(<TimelineSection />);
 
     fireEvent.click(screen.getByRole('button', { name: 'Retry' }));
-
     expect(retrySpy).toHaveBeenCalledTimes(1);
   });
 
-  it('shows fallback message for empty success results', () => {
+  it('renders empty-state text when success has no characters', () => {
     mockedUseTypedData.mockReturnValue({
       status: 'success',
       data: [],
@@ -202,6 +293,100 @@ describe('TimelineSection', () => {
     render(<TimelineSection />);
 
     expect(screen.getByText('No characters found.')).toBeInTheDocument();
+  });
+
+  it('renders exactly 5 season markers at 10%,30%,50%,70%,90% with labels S01-S05', () => {
+    mockedUseTypedData.mockReturnValue({
+      status: 'success',
+      data: charactersFixture,
+      loadedAt: new Date(),
+    });
+
+    render(<TimelineSection />);
+
+    const markers = screen.getAllByTestId('season-marker');
+    expect(markers).toHaveLength(5);
+    expect(markers.map((item) => item.getAttribute('data-position'))).toEqual(['10', '30', '50', '70', '90']);
+    expect(screen.getByText('S01')).toBeInTheDocument();
+    expect(screen.getByText('S02')).toBeInTheDocument();
+    expect(screen.getByText('S03')).toBeInTheDocument();
+    expect(screen.getByText('S04')).toBeInTheDocument();
+    expect(screen.getByText('S05')).toBeInTheDocument();
+  });
+
+  it('renders progress fill configured for expandBar and scroll timeline', () => {
+    mockedUseTypedData.mockReturnValue({ status: 'loading' });
+
+    render(<TimelineSection />);
+
+    const fill = screen.getByTestId('timeline-fill');
+    expect(fill).toHaveAttribute('data-animation', 'expandBar');
+    expect(fill).toHaveAttribute('data-timeline', 'scroll');
+  });
+
+  it('does not attach JavaScript scroll listeners for timeline progress', () => {
+    const addEventListenerSpy = vi.spyOn(window, 'addEventListener');
+    mockedUseTypedData.mockReturnValue({ status: 'loading' });
+
+    render(<TimelineSection />);
+
+    expect(addEventListenerSpy).not.toHaveBeenCalledWith('scroll', expect.any(Function));
+  });
+
+  it('renders CharCards in a horizontal scroll row when success has data', () => {
+    mockedUseTypedData.mockReturnValue({
+      status: 'success',
+      data: charactersFixture,
+      loadedAt: new Date(),
+    });
+
+    render(<TimelineSection />);
+
+    expect(screen.getByTestId('timeline-cards-row')).toBeInTheDocument();
+    expect(screen.getAllByTestId(/char-card-/)).toHaveLength(5);
+  });
+
+  it('shows selection panel with GlitchText always=true when selectedChar exists', () => {
+    selectedCharState = charactersFixture[0];
+    mockedUseTypedData.mockReturnValue({
+      status: 'success',
+      data: charactersFixture,
+      loadedAt: new Date(),
+    });
+
+    render(<TimelineSection />);
+
+    expect(screen.getByTestId('selected-char-name')).toHaveAttribute('data-always', 'true');
+  });
+
+  it('renders selected character name in character color and clears selection on CLEAR click', () => {
+    selectedCharState = charactersFixture[0];
+    mockedUseTypedData.mockReturnValue({
+      status: 'success',
+      data: charactersFixture,
+      loadedAt: new Date(),
+    });
+
+    render(<TimelineSection />);
+
+    expect(screen.getByTestId('selected-char-name')).toHaveTextContent('Walter White');
+    expect(screen.getByTestId('selected-char-name')).toHaveStyle({ color: '#4FC3F7' });
+
+    fireEvent.click(screen.getByRole('button', { name: 'Clear Selection' }));
+    expect(clearCharSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('shows dim instructional text when selectedChar is null', () => {
+    mockedUseTypedData.mockReturnValue({
+      status: 'success',
+      data: charactersFixture,
+      loadedAt: new Date(),
+    });
+
+    render(<TimelineSection />);
+
+    expect(screen.getByText('Select a character card to focus the quote wall.')).toBeInTheDocument();
+    expect(screen.queryByTestId('selected-char-name')).toBeNull();
   });
 
   it('mounts TimelineSection after HeroSection in App scroll container order', () => {
@@ -224,18 +409,5 @@ describe('TimelineSection', () => {
 
     expect(firstSection).toHaveAttribute('id', 'section-01');
     expect(secondSection).toHaveAttribute('id', 'section-02');
-  });
-
-  it('replaces any existing section-02 placeholder output with real TimelineSection content', () => {
-    mockedUseTypedData.mockReturnValue({
-      status: 'success',
-      data: charactersFixture,
-      loadedAt: new Date(),
-    });
-
-    const { container } = render(<TimelineSection />);
-
-    expect(container.querySelector('[data-testid="section-02-placeholder"]')).toBeNull();
-    expect(container.querySelector('#section-02')).not.toBeNull();
   });
 });

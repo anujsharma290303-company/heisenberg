@@ -15,7 +15,6 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: './src/test-setup.ts',
     maxWorkers: 4,
-    minWorkers: 1,
     coverage: {
       provider: 'v8',
       thresholds: {

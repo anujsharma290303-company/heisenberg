@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import { CharacterChip } from '../ui/CharacterChip';
+import { ToneFilterBar } from '../ui/ToneFilterBar';
 import { QuoteCard } from '../cards/QuoteCard';
 import { useQuoteFilter } from '../../hooks/useQuoteFilter';
 import { useTypedData } from '../../hooks/useTypedData';
@@ -19,6 +21,8 @@ export function QuotesSection({ className }: QuotesSectionProps) {
   const setSection = useUIStore((state) => state.setSection);
   const selectedChar = useExplorerStore((state) => state.selectedChar);
   const toneFilter = useExplorerStore((state) => state.toneFilter);
+  const setTone = useExplorerStore((state) => state.setTone);
+  const clearChar = useExplorerStore((state) => state.clearChar);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -54,7 +58,7 @@ export function QuotesSection({ className }: QuotesSectionProps) {
   const charactersState = useTypedData<Character[]>(charactersLoader);
 
   const baseQuotes = quotesState.status === 'success' ? quotesState.data : [];
-  const { filtered, resultCount, setFilter, setTone, setCharacterId } = useQuoteFilter<Quote>(baseQuotes);
+  const { filtered, resultCount, setFilter, setTone: setFilterTone, setCharacterId } = useQuoteFilter<Quote>(baseQuotes);
 
   useEffect(() => {
     if (selectedChar) {
@@ -71,8 +75,8 @@ export function QuotesSection({ className }: QuotesSectionProps) {
       return;
     }
 
-    setTone(toneFilter);
-  }, [toneFilter, setTone, setFilter]);
+    setFilterTone(toneFilter);
+  }, [toneFilter, setFilterTone, setFilter]);
 
   const characterById = useMemo(() => {
     if (charactersState.status !== 'success') {
@@ -115,6 +119,13 @@ export function QuotesSection({ className }: QuotesSectionProps) {
             Results: <span data-testid="quotes-result-count">{resultCount}</span>
           </p>
         </header>
+
+        <div className={styles.controlBar}>
+          <div className={styles.filterRow}>
+            <ToneFilterBar active={toneFilter} onSelect={setTone} />
+          </div>
+          {selectedChar ? <CharacterChip character={selectedChar} onClear={clearChar} /> : null}
+        </div>
 
         {loading ? (
           <div className={styles.grid}>

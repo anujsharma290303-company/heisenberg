@@ -23,7 +23,7 @@ describe('FilmGrain', () => {
 
     render(<FilmGrain />);
 
-    expect(getContextSpy).toHaveBeenCalledWith('2d');
+    expect(getContextSpy).toHaveBeenCalledWith('2d', { willReadFrequently: true });
   });
 
   it('cancels animation frame on unmount', () => {
