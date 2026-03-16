@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 
 type FilterMap<T> = Partial<T>;
 
-interface UseQuoteFilterResult<T extends Record<string, unknown>> {
+interface UseQuoteFilterResult<T extends object> {
   filtered: T[];
   resultCount: number;
   setFilter: <K extends keyof T>(key: K, value: T[K] | null | undefined) => void;
@@ -13,7 +13,7 @@ interface UseQuoteFilterResult<T extends Record<string, unknown>> {
   resetFilters: () => void;
 }
 
-export const useQuoteFilter = <T extends Record<string, unknown>>(
+export const useQuoteFilter = <T extends object>(
   data: T[]
 ): UseQuoteFilterResult<T> => {
   const [filters, setFilters] = useState<FilterMap<T>>({});

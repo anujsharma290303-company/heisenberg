@@ -1,0 +1,83 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-lg);
+  border-left: 3px solid color-mix(in srgb, var(--color-smoke) 75%, transparent);
+  border-radius: 12px;
+  background: var(--color-surface);
+  color: var(--color-paper);
+  cursor: pointer;
+  animation: fadeUp var(--motion-medium) var(--ease-standard) both;
+  transition:
+    transform var(--motion-fast) var(--ease-standard),
+    border-left-color var(--motion-fast) var(--ease-standard),
+    background var(--motion-fast) var(--ease-standard),
+    box-shadow var(--motion-fast) var(--ease-standard);
+}
+
+.card:hover {
+  transform: translateY(-6px) scale(1.01);
+  border-left-color: var(--quote-accent);
+  background: var(--color-surface-elevated);
+  box-shadow: 0 16px 40px color-mix(in srgb, var(--quote-accent) 22%, transparent);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--color-crystal);
+  outline-offset: 3px;
+}
+
+.card:active {
+  transform: scale(0.99);
+}
+
+.openMark {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 1.7rem + 1.2vw, 3rem);
+  line-height: 0.8;
+}
+
+.text {
+  font-family: var(--font-serif);
+  font-size: var(--text-body);
+  color: var(--color-paper);
+  opacity: 0.95;
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--space-xs);
+  gap: var(--space-sm);
+}
+
+.speaker {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 0.98rem + 0.12vw, 1.0625rem);
+  letter-spacing: var(--tracking-display);
+}
+
+.seasonCode {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-mono);
+  color: var(--color-ghost);
+}
+
+.clamp4 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+}
+
+.fadeUp {
+  animation-name: fadeUp;
+}
+
+.hoverable {
+  will-change: transform;
+}
