@@ -1,0 +1,96 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  width: 100%;
+  padding: var(--space-lg);
+  text-align: left;
+  background: color-mix(in srgb, var(--color-surface) 88%, black 12%);
+  border: 1px solid var(--color-smoke);
+  border-radius: 12px;
+  color: var(--color-paper);
+  cursor: pointer;
+  animation: charIn var(--motion-medium) var(--ease-standard) both;
+  transition:
+    transform var(--motion-fast) var(--ease-standard),
+    border-color var(--motion-fast) var(--ease-standard),
+    box-shadow var(--motion-fast) var(--ease-standard),
+    background var(--motion-fast) var(--ease-standard);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: 12px 12px 0 0;
+  background: linear-gradient(to right, var(--char-accent), transparent);
+}
+
+.card:hover {
+  border-color: color-mix(in srgb, var(--char-accent) 55%, var(--color-smoke) 45%);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--color-crystal);
+  outline-offset: 3px;
+}
+
+.card:active {
+  transform: scale(0.99);
+}
+
+.selected {
+  border-color: var(--char-accent);
+  box-shadow: 0 0 20px var(--char-accent);
+  transform: translateY(-10px) scale(1.03);
+}
+
+.name {
+  font-family: var(--font-display);
+  font-size: var(--font-size-xl);
+  letter-spacing: var(--tracking-display);
+  line-height: 0.95;
+}
+
+.alias {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--color-ghost);
+}
+
+.description {
+  font-family: var(--font-serif);
+  font-size: var(--text-body);
+  color: var(--color-paper);
+  opacity: 0.92;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-xs);
+}
+
+.badge {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid color-mix(in srgb, var(--color-ghost) 45%, transparent);
+  border-radius: 999px;
+  padding: 0.3em 0.7em;
+  color: var(--color-paper);
+  background: color-mix(in srgb, var(--color-surface) 72%, transparent);
+}
+
+.charIn {
+  animation-name: charIn;
+}
