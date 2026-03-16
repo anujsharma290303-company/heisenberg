@@ -49,6 +49,10 @@ vi.mock('../TimelineSection', () => ({
   TimelineSection: () => <section id="section-02" data-testid="timeline-section" />,
 }));
 
+vi.mock('../ChemistrySection', () => ({
+  ChemistrySection: () => <section id="section-04" data-testid="chemistry-section" />,
+}));
+
 vi.mock('../../../stores/useUIStore', () => ({
   useUIStore: vi.fn((selector) =>
     selector({

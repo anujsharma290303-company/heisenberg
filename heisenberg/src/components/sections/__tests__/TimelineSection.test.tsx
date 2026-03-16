@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import App from '../../../App';
@@ -90,6 +90,10 @@ vi.mock('../HeroSection', () => ({
 
 vi.mock('../QuotesSection', () => ({
   QuotesSection: () => <section id="section-03" data-testid="quotes-section" />,
+}));
+
+vi.mock('../ChemistrySection', () => ({
+  ChemistrySection: () => <section id="section-04" data-testid="chemistry-section" />,
 }));
 
 vi.mock('../../overlays/QuoteReveal', () => ({
@@ -242,7 +246,9 @@ describe('TimelineSection', () => {
       throw new Error('IntersectionObserver callback not captured');
     }
 
-    ioCallback([{ isIntersecting: true } as IntersectionObserverEntry]);
+    act(() => {
+      ioCallback?.([{ isIntersecting: true } as IntersectionObserverEntry]);
+    });
 
     expect(section.className).toContain('revealed');
     expect(setSectionSpy).toHaveBeenCalledWith(1);

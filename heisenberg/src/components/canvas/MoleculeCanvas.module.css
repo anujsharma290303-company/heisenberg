@@ -1,0 +1,19 @@
+.root {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid #1c1c1c;
+  background: #0a0a0a;
+  overflow: hidden;
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #0a0a0a;
+  cursor: grab;
+}
+
+.canvas:active {
+  cursor: grabbing;
+}

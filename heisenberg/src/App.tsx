@@ -4,6 +4,7 @@ import { DotNav } from "./components/ui/DotNav";
 import { HeroSection } from "./components/sections/HeroSection";
 import { TimelineSection } from "./components/sections/TimelineSection";
 import { QuotesSection } from "./components/sections/QuotesSection";
+import { ChemistrySection } from "./components/sections/ChemistrySection";
 import { QuoteReveal } from "./components/overlays/QuoteReveal";
 import { Scanlines } from "./components/canvas/Scanlines";
 import { useExplorerStore } from "./stores/useExplorerStore";
@@ -37,6 +38,7 @@ function App() {
         <HeroSection />
         <TimelineSection />
         <QuotesSection />
+        <ChemistrySection />
       </div>
 
       <QuoteReveal character={resolvedCharacter} />

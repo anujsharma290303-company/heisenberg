@@ -93,6 +93,10 @@ vi.mock('../../sections/QuotesSection', () => ({
   QuotesSection: () => <section id="section-03" data-testid="quotes-section" />,
 }));
 
+vi.mock('../../sections/ChemistrySection', () => ({
+  ChemistrySection: () => <section id="section-04" data-testid="chemistry-section" />,
+}));
+
 vi.mock('../../cards/QuoteCard', () => ({
   QuoteCard: () => <article />,
 }));
