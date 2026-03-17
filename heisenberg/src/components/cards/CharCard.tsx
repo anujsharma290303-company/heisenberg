@@ -3,6 +3,12 @@ import type React from 'react';
 import type { Character } from '../../types/character';
 import { useExplorerStore } from '../../stores/useExplorerStore';
 import styles from './CharCard.module.css';
+import walterImage from '../../data/images/walter.jpg';
+import jesseImage from '../../data/images/jesse_pinkman.jpg';
+import gusImage from '../../data/images/gustavo_fring.jpg';
+import hankImage from '../../data/images/hank.jpg';
+import mikeImage from '../../data/images/mike.jpg';
+import saulImage from '../../data/images/saul.jpg';
 
 export interface CharCardProps {
   character: Character;
@@ -14,11 +20,21 @@ type CharCardInlineStyle = React.CSSProperties & {
   '--char-accent'?: string;
 };
 
+const CHARACTER_IMAGE_BY_ID: Record<string, string> = {
+  walt: walterImage,
+  jesse: jesseImage,
+  gus: gusImage,
+  hank: hankImage,
+  mike: mikeImage,
+  saul: saulImage,
+};
+
 export function CharCard({ character, index, className }: CharCardProps) {
   const selectedChar = useExplorerStore((state) => state.selectedChar);
   const selectChar = useExplorerStore((state) => state.selectChar);
   const clearChar = useExplorerStore((state) => state.clearChar);
   const isSelected = selectedChar?.id === character.id;
+  const imageSrc = CHARACTER_IMAGE_BY_ID[character.id] ?? null;
 
   const handleClick = () => {
     if (isSelected) {
@@ -72,6 +88,19 @@ export function CharCard({ character, index, className }: CharCardProps) {
       data-selected-shadow={isSelected ? '0 0 20px' : ''}
       aria-pressed={isSelected}
     >
+      {imageSrc ? (
+        <div className={styles.media}>
+          <img
+            src={imageSrc}
+            alt={character.name}
+            className={styles.portrait}
+            loading="lazy"
+            decoding="async"
+          />
+          <span className={styles.mediaShade} />
+        </div>
+      ) : null}
+
       <h3 className={styles.name}>{character.name}</h3>
       <p className={styles.alias}>{character.alias}</p>
       <p className={styles.description}>{character.desc}</p>

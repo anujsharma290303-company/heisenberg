@@ -43,5 +43,14 @@
     "color": "#8E44AD",
     "seasons": [2, 3, 4, 5],
     "role": "fixer"
+  },
+  {
+    "id": "saul",
+    "name": "Saul Goodman",
+    "alias": "Jimmy McGill",
+    "desc": "A slick and resourceful criminal lawyer who thrives on bending the law and helping clients stay one step ahead of trouble.",
+    "color": "#F1C40F",
+    "seasons": [2, 3, 4, 5],
+    "role": "lawyer"
   }
 ]
