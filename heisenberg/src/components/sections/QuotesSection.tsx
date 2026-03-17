@@ -128,9 +128,9 @@ export function QuotesSection({ className }: QuotesSectionProps) {
         </div>
 
         {loading ? (
-          <div className={styles.grid}>
+          <div className={styles.quotesGrid}>
             {Array.from({ length: 6 }).map((_, index) => (
-              <div key={index} data-testid="quotes-shimmer" className={`skeleton ${styles.shimmer}`} />
+              <div key={index} data-testid="quotes-shimmer" className={`skeleton shimmer ${styles.shimmer}`} />
             ))}
           </div>
         ) : null}
@@ -155,7 +155,7 @@ export function QuotesSection({ className }: QuotesSectionProps) {
 
         {quotesState.status === 'success' && charactersState.status === 'success' ? (
           mappedQuotes.length > 0 ? (
-            <div className={styles.grid}>
+            <div className={styles.quotesGrid}>
               {mappedQuotes.map(({ quote, character }, index) => (
                 <QuoteCard key={quote.id} quote={quote} character={character} index={index} />
               ))}

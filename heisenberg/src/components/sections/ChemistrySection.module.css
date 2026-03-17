@@ -85,6 +85,15 @@
   outline-offset: 2px;
 }
 
+.tile:hover {
+  border-color: color-mix(in srgb, var(--color-neon-green) 55%, var(--color-smoke) 45%);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--color-neon-green) 28%, transparent);
+}
+
+.tile:active {
+  transform: scale(0.97);
+}
+
 .tileActive {
   opacity: 1;
   border-color: color-mix(in srgb, var(--color-neon-green) 70%, var(--color-smoke) 30%);
@@ -213,6 +222,10 @@
 .retryBtn:focus-visible {
   outline: 2px solid var(--color-crystal);
   outline-offset: 2px;
+}
+
+.retryBtn:active {
+  transform: scale(0.97);
 }
 
 .revealed {

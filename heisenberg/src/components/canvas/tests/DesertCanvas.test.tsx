@@ -18,7 +18,10 @@ describe('DesertCanvas', () => {
   it('calls getContext 2d on mount', () => {
     const getContextSpy = vi
       .spyOn(HTMLCanvasElement.prototype, 'getContext')
-      .mockReturnValue({} as CanvasRenderingContext2D);
+      .mockImplementation(
+        ((contextId: string) => (contextId === '2d' ? ({} as CanvasRenderingContext2D) : null)) as unknown as
+          HTMLCanvasElement['getContext']
+      );
 
     render(<DesertCanvas />);
 

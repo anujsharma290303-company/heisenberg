@@ -80,7 +80,9 @@ describe('MoleculeCanvas', () => {
       textBaseline: 'alphabetic',
     } as unknown as CanvasRenderingContext2D;
 
-    vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue(fakeCtx);
+    vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockImplementation(
+      ((contextId: string) => (contextId === '2d' ? fakeCtx : null)) as unknown as HTMLCanvasElement['getContext']
+    );
     let ranFrame = false;
     vi.spyOn(globalThis, 'requestAnimationFrame').mockImplementation((cb: FrameRequestCallback) => {
       if (!ranFrame) {
@@ -127,7 +129,9 @@ describe('MoleculeCanvas', () => {
       textBaseline: 'alphabetic',
     } as unknown as CanvasRenderingContext2D;
 
-    vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue(fakeCtx);
+    vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockImplementation(
+      ((contextId: string) => (contextId === '2d' ? fakeCtx : null)) as unknown as HTMLCanvasElement['getContext']
+    );
     let ranFrame = false;
     vi.spyOn(globalThis, 'requestAnimationFrame').mockImplementation((cb: FrameRequestCallback) => {
       if (!ranFrame) {

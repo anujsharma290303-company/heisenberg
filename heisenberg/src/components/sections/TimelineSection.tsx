@@ -99,7 +99,7 @@ export function TimelineSection({ className }: TimelineSectionProps) {
         {dataState.status === 'loading' || dataState.status === 'idle' ? (
           <div className={styles.cardsRow}>
             {Array.from({ length: 5 }).map((_, index) => (
-              <div key={index} data-testid="timeline-shimmer" className={`skeleton ${styles.shimmer}`} />
+              <div key={index} data-testid="timeline-shimmer" className={`skeleton shimmer ${styles.shimmer}`} />
             ))}
           </div>
         ) : null}

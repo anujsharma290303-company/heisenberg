@@ -67,8 +67,21 @@
     var(--color-deep-blue) 100%
   );
   animation: expandBar 1.1s var(--ease-standard) both;
-  animation-timeline: scroll();
-  animation-range: entry 0% cover 80%;
+  animation-timeline: scroll(root);
+  animation-range: entry 25% entry 75%;
+}
+
+@supports not (animation-timeline: scroll()) {
+  .timelineFill {
+    width: 0%;
+    transform: none;
+    animation: none;
+    transition: width 1.1s var(--ease-standard);
+  }
+
+  .revealed .timelineFill {
+    width: 100%;
+  }
 }
 
 .markerRow {
@@ -110,6 +123,8 @@
   overflow-x: auto;
   overflow-y: hidden;
   padding: var(--space-xs);
+  container-type: inline-size;
+  container-name: char-cards;
   scroll-snap-type: x proximity;
   scrollbar-width: thin;
   scrollbar-color: color-mix(in srgb, var(--color-hat) 80%, var(--color-crystal) 20%) #121212;
@@ -123,6 +138,24 @@
 .cardsRow > * {
   flex: 0 0 min(18.5rem, 86vw);
   scroll-snap-align: start;
+}
+
+@container char-cards (max-width: 400px) {
+  .cardsRow > * {
+    min-width: 200px;
+  }
+}
+
+@container char-cards (min-width: 401px) and (max-width: 700px) {
+  .cardsRow > * {
+    min-width: 240px;
+  }
+}
+
+@container char-cards (min-width: 701px) {
+  .cardsRow > * {
+    min-width: 280px;
+  }
 }
 
 .cardsRow::-webkit-scrollbar {

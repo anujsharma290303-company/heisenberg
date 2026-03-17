@@ -10,6 +10,7 @@
     "test:run": "cross-env NODE_OPTIONS=--max-old-space-size=4096 vitest run",
     "test:coverage": "cross-env NODE_OPTIONS=--max-old-space-size=4096 vitest run --coverage",
     "lint": "eslint . --ext ts,tsx --max-warnings 0",
+    "lint:css": "npx --yes stylelint \"src/**/*.css\"",
     "preview": "vite preview"
   },
   "dependencies": {

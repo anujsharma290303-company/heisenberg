@@ -113,7 +113,7 @@ export function ChemistrySection({ className }: ChemistrySectionProps) {
         </header>
 
         {isLoading ? (
-          <div className={`skeleton ${styles.shimmer}`} data-testid="chemistry-loading" />
+          <div className={`skeleton shimmer ${styles.shimmer}`} data-testid="chemistry-loading" />
         ) : null}
 
         {errorMessage ? (

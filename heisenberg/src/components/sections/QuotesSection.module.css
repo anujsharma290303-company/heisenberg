@@ -50,16 +50,36 @@
   text-transform: uppercase;
 }
 
-.grid {
+.quotesGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: var(--space-md);
   padding: var(--space-sm);
+  container-type: inline-size;
+  container-name: quotes-grid;
   border-radius: 16px;
   border: 1px solid color-mix(in srgb, var(--color-smoke) 76%, transparent);
   background:
     linear-gradient(to bottom, rgba(255, 255, 255, 0.02), transparent 24%),
     color-mix(in srgb, var(--color-surface) 86%, black 14%);
+}
+
+@container quotes-grid (max-width: 500px) {
+  .quotesGrid :global(article) {
+    padding: var(--space-4);
+  }
+}
+
+@container quotes-grid (min-width: 501px) and (max-width: 800px) {
+  .quotesGrid :global(article) {
+    padding: var(--space-4) var(--space-8);
+  }
+}
+
+@container quotes-grid (min-width: 801px) {
+  .quotesGrid :global(article) {
+    padding: var(--space-8);
+  }
 }
 
 .shimmer {
@@ -136,7 +156,7 @@
     align-items: flex-start;
   }
 
-  .grid {
+  .quotesGrid {
     grid-template-columns: 1fr;
   }
 }
