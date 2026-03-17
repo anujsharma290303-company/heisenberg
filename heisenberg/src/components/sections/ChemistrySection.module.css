@@ -1,11 +1,11 @@
 .sectionRoot {
   min-height: 100svh;
-  background: var(--color-void);
+  background: #0a0f0a;
   padding: var(--space-2xl) var(--space-lg);
 }
 
 .inner {
-  width: min(1200px, 100%);
+  width: min(1280px, 100%);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -22,15 +22,136 @@
   font-family: var(--font-mono);
   font-size: var(--text-label);
   letter-spacing: var(--tracking-wide);
-  color: var(--color-ghost);
+  color: var(--color-paper);
   text-transform: uppercase;
 }
 
-.title {
-  font-family: var(--font-display);
-  letter-spacing: var(--tracking-display);
-  font-size: var(--text-heading);
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+.leftCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.tilesGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-sm);
+}
+
+.tile {
+  background: #0d0d0d;
+  border: 1px solid #1c1c1c;
+  border-radius: 10px;
+  min-height: 120px;
+  padding: 0.45rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  animation: scaleIn 0.35s var(--ease-standard) both;
+  transition:
+    opacity var(--motion-fast) var(--ease-standard),
+    transform var(--motion-fast) var(--ease-standard),
+    box-shadow var(--motion-fast) var(--ease-standard),
+    border-color var(--motion-fast) var(--ease-standard);
+}
+
+.tile:focus-visible {
+  outline: 2px solid var(--color-crystal);
+  outline-offset: 2px;
+}
+
+.tileActive {
+  opacity: 1;
+}
+
+.tileDimmed {
+  opacity: 0.3;
+}
+
+.atomicNumber {
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
   color: var(--color-paper);
+  letter-spacing: var(--tracking-mono);
+}
+
+.symbol {
+  font-family: var(--font-display);
+  font-size: 30px;
+  line-height: 1;
+  color: #888888;
+}
+
+.elementName {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  color: var(--color-ghost);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.connectionPanel {
+  border: 1px solid var(--color-smoke);
+  border-radius: 10px;
+  padding: var(--space-sm) var(--space-md);
+  background: color-mix(in srgb, var(--color-surface) 78%, transparent);
+  animation: fadeUp 0.4s var(--ease-standard);
+}
+
+.connectionNote {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-body);
+  color: var(--color-paper);
+}
+
+.rightCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.rotateHint {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  color: var(--color-ghost);
+  letter-spacing: var(--tracking-mono);
+}
+
+.moleculeMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2xs);
+}
+
+.formula {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-lg);
+  color: var(--color-paper);
+  letter-spacing: var(--tracking-mono);
+}
+
+.moleculeName {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--text-body);
+  color: var(--color-ghost);
 }
 
 .shimmer {
@@ -46,6 +167,7 @@
 }
 
 .errorText {
+  margin: 0;
   font-family: var(--font-serif);
   font-size: var(--text-body);
   color: var(--color-paper);
@@ -60,7 +182,7 @@
   font-family: var(--font-ui);
   font-size: var(--font-size-sm);
   cursor: pointer;
-  transition: all 0.25s var(--ease-reveal);
+  transition: all var(--motion-fast) var(--ease-standard);
 }
 
 .retryBtn:hover {
@@ -74,4 +196,10 @@
 
 .revealed {
   animation: fadeIn var(--motion-medium) var(--ease-standard);
+}
+
+@media (max-width: 1024px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
 }
