@@ -64,6 +64,7 @@ describe('HeroSection', () => {
   let observedElement: Element | null = null;
   let disconnectSpy: ReturnType<typeof vi.fn>;
   let setSectionSpy: (index: number) => void;
+  let setGrainIntensitySpy: (value: number) => void;
 
   const triggerVisibility = (isIntersecting: boolean) => {
     if (observerCallback === null || observedElement === null) {
@@ -94,13 +95,14 @@ describe('HeroSection', () => {
 
     disconnectSpy = vi.fn();
     setSectionSpy = vi.fn<(index: number) => void>();
+    setGrainIntensitySpy = vi.fn<(value: number) => void>();
 
     mockedUseUIStore.mockImplementation((selector) =>
       selector({
         activeSection: 0,
         grainIntensity: 0.028,
         setSection: setSectionSpy,
-        setGrainIntensity: vi.fn(),
+        setGrainIntensity: setGrainIntensitySpy,
       })
     );
 
@@ -165,6 +167,14 @@ describe('HeroSection', () => {
     fireEvent.click(screen.getByTestId('typewriter'));
 
     expect(screen.getAllByTestId('counter')).toHaveLength(4);
+  });
+
+  it('increases grain intensity when typewriter completes', () => {
+    render(<HeroSection />);
+
+    fireEvent.click(screen.getByTestId('typewriter'));
+
+    expect(setGrainIntensitySpy).toHaveBeenCalledWith(0.07);
   });
 
   it('renders EMMY AWARDS counter with suffix +', () => {

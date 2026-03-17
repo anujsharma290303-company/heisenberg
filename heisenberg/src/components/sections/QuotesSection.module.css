@@ -3,9 +3,9 @@
   min-height: 100svh;
   padding: var(--space-2xl) var(--space-lg);
   background:
-    radial-gradient(circle at 86% 12%, rgba(192, 57, 43, 0.12), transparent 32%),
-    radial-gradient(circle at 12% 88%, rgba(79, 195, 247, 0.09), transparent 38%),
-    linear-gradient(180deg, #070707 0%, #090909 100%);
+    radial-gradient(circle at 86% 12%, rgba(79, 195, 247, 0.12), transparent 34%),
+    radial-gradient(circle at 12% 88%, rgba(46, 204, 113, 0.16), transparent 40%),
+    linear-gradient(180deg, #0b0c10 0%, #0d3b2e 55%, #0b0c10 100%);
 }
 
 .sectionRoot::before {

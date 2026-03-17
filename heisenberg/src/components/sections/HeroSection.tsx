@@ -16,6 +16,7 @@ export function HeroSection({ className }: HeroSectionProps) {
   const [heroTyped, setHeroTyped] = useState(false);
   const [revealed, setRevealed] = useState(false);
   const setSection = useUIStore((state) => state.setSection);
+  const setGrainIntensity = useUIStore((state) => state.setGrainIntensity);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -59,7 +60,13 @@ export function HeroSection({ className }: HeroSectionProps) {
         </h1>
 
         <div className={styles.subtitle}>
-          <Typewriter text="I am the one who knocks." onComplete={() => setHeroTyped(true)} />
+          <Typewriter
+            text="I am the one who knocks."
+            onComplete={() => {
+              setHeroTyped(true);
+              setGrainIntensity(0.07);
+            }}
+          />
         </div>
 
         {heroTyped ? (

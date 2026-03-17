@@ -2,9 +2,9 @@
   position: relative;
   min-height: 100svh;
   background:
-    radial-gradient(circle at 50% 84%, rgba(212, 160, 23, 0.1), transparent 52%),
-    radial-gradient(circle at 20% 12%, rgba(79, 195, 247, 0.08), transparent 36%),
-    linear-gradient(180deg, #050505 0%, #090909 58%, #060606 100%);
+    radial-gradient(circle at 50% 84%, rgba(247, 220, 111, 0.2), transparent 52%),
+    radial-gradient(circle at 20% 12%, rgba(142, 91, 58, 0.22), transparent 38%),
+    linear-gradient(180deg, #5d4037 0%, #3f2c25 58%, #0b0c10 100%);
   display: flex;
   align-items: center;
   justify-content: center;

@@ -11,12 +11,11 @@ interface DesertParticle {
   speed: number;
 }
 
-const X_RANGE = 700;
-const Y_RANGE = 450;
-const Z_RANGE = 260;
+const X_RANGE = 780;
+const Y_RANGE = 520;
+const Z_RANGE = 280;
 
-const randomInRange = (min: number, max: number): number =>
-  Math.random() * (max - min) + min;
+const randomInRange = (min: number, max: number): number => Math.random() * (max - min) + min;
 
 const createParticle = (): DesertParticle => ({
   x: randomInRange(-X_RANGE, X_RANGE),
@@ -25,7 +24,7 @@ const createParticle = (): DesertParticle => ({
   speed: randomInRange(0.3, 1.2),
 });
 
-export function DesertCanvas({ particleCount = 500 }: DesertCanvasProps) {
+export function DesertCanvas({ particleCount = 1400 }: DesertCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
   const frameRef = useRef<number | null>(null);
@@ -70,18 +69,19 @@ export function DesertCanvas({ particleCount = 500 }: DesertCanvasProps) {
           const sx = particle.x * scale + width / 2;
           const sy = particle.y * scale + height / 2;
           const opacity = Math.max(0, Math.min(1, (particle.z + Z_RANGE) / (Z_RANGE * 2)));
-          const radius = Math.max(0.5, scale * 2);
+          const radius = Math.max(0.7, scale * 2.2);
 
           context.beginPath();
-          context.fillStyle = `rgba(212, 160, 23, ${opacity})`;
+          context.fillStyle = `rgba(46, 204, 113, ${opacity})`;
           context.arc(sx, sy, radius, 0, Math.PI * 2);
           context.fill();
 
           particle.x -= particle.speed;
+
           if (particle.x < -X_RANGE) {
             particle.x = X_RANGE;
-            particle.z = randomInRange(-Z_RANGE, Z_RANGE);
             particle.y = randomInRange(-Y_RANGE, Y_RANGE);
+            particle.z = randomInRange(-Z_RANGE, Z_RANGE);
             particle.speed = randomInRange(0.3, 1.2);
           }
         }
