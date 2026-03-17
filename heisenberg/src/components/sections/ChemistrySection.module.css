@@ -1,10 +1,24 @@
 .sectionRoot {
+  position: relative;
   min-height: 100svh;
-  background: #0a0f0a;
+  background:
+    radial-gradient(circle at 10% 12%, rgba(39, 174, 96, 0.14), transparent 34%),
+    radial-gradient(circle at 86% 86%, rgba(79, 195, 247, 0.08), transparent 38%),
+    linear-gradient(180deg, #071008 0%, #0a0f0a 52%, #090d09 100%);
   padding: var(--space-2xl) var(--space-lg);
 }
 
+.sectionRoot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.34), transparent 22%, transparent 78%, rgba(0, 0, 0, 0.34));
+}
+
 .inner {
+  position: relative;
+  z-index: 1;
   width: min(1280px, 100%);
   margin: 0 auto;
   display: flex;
@@ -46,8 +60,10 @@
 }
 
 .tile {
-  background: #0d0d0d;
-  border: 1px solid #1c1c1c;
+  background:
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03), transparent 26%),
+    #0d0d0d;
+  border: 1px solid color-mix(in srgb, var(--color-smoke) 72%, transparent);
   border-radius: 10px;
   min-height: 120px;
   padding: 0.45rem;
@@ -71,6 +87,8 @@
 
 .tileActive {
   opacity: 1;
+  border-color: color-mix(in srgb, var(--color-green) 70%, var(--color-smoke) 30%);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-green) 35%, transparent);
 }
 
 .tileDimmed {
@@ -81,21 +99,21 @@
   width: 100%;
   text-align: left;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: var(--font-size-xs);
   color: var(--color-paper);
   letter-spacing: var(--tracking-mono);
 }
 
 .symbol {
   font-family: var(--font-display);
-  font-size: 30px;
+  font-size: clamp(1.5rem, 1.36rem + 0.72vw, 1.9rem);
   line-height: 1;
   color: #888888;
 }
 
 .elementName {
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: clamp(0.48rem, 0.45rem + 0.2vw, 0.62rem);
   color: var(--color-ghost);
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -105,7 +123,9 @@
   border: 1px solid var(--color-smoke);
   border-radius: 10px;
   padding: var(--space-sm) var(--space-md);
-  background: color-mix(in srgb, var(--color-surface) 78%, transparent);
+  background:
+    linear-gradient(to right, rgba(39, 174, 96, 0.08), transparent 45%),
+    color-mix(in srgb, var(--color-surface) 78%, transparent);
   animation: fadeUp 0.4s var(--ease-standard);
 }
 
@@ -199,7 +219,17 @@
 }
 
 @media (max-width: 1024px) {
+  .sectionRoot {
+    padding-inline: var(--space-md);
+  }
+
   .layout {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .tilesGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

@@ -4,6 +4,9 @@
   gap: var(--space-xs);
   padding: var(--space-xs) var(--space-sm);
   border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--color-hat) 48%, var(--color-smoke) 52%);
+  background: color-mix(in srgb, var(--color-surface) 80%, transparent);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--color-hat) 18%, transparent);
   font-family: var(--font-mono);
   font-size: var(--text-label);
   letter-spacing: var(--tracking-mono);

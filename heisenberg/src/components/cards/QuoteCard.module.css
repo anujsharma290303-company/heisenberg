@@ -6,7 +6,9 @@
   padding: var(--space-lg);
   border-left: 3px solid color-mix(in srgb, var(--color-smoke) 75%, transparent);
   border-radius: 12px;
-  background: var(--color-surface);
+  background:
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03), transparent 28%),
+    var(--color-surface);
   color: var(--color-paper);
   cursor: pointer;
   animation: fadeUp var(--motion-medium) var(--ease-standard) both;
@@ -20,7 +22,9 @@
 .card:hover {
   transform: translateY(-6px) scale(1.01);
   border-left-color: var(--quote-accent);
-  background: var(--color-surface-elevated);
+  background:
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04), transparent 30%),
+    var(--color-surface-elevated);
   box-shadow: 0 16px 40px color-mix(in srgb, var(--quote-accent) 22%, transparent);
 }
 
