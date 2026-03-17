@@ -17,5 +17,6 @@
   font-size: var(--text-label);
   letter-spacing: var(--tracking-mono);
   text-transform: uppercase;
-  color: var(--color-ghost);
+  color: color-mix(in srgb, var(--color-soft-yellow) 72%, var(--color-paper) 28%);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--color-soft-yellow) 22%, transparent);
 }

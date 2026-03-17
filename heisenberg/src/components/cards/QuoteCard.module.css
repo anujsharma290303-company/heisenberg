@@ -68,7 +68,7 @@
   font-family: var(--font-mono);
   font-size: var(--text-label);
   letter-spacing: var(--tracking-mono);
-  color: var(--color-ghost);
+  color: color-mix(in srgb, var(--color-soft-yellow) 52%, var(--color-paper) 48%);
 }
 
 .clamp4 {

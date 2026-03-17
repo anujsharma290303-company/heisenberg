@@ -36,7 +36,7 @@
   font-family: var(--font-mono);
   font-size: var(--text-label);
   letter-spacing: var(--tracking-wide);
-  color: var(--color-paper);
+  color: color-mix(in srgb, var(--color-soft-yellow) 50%, var(--color-paper) 50%);
   text-transform: uppercase;
 }
 
@@ -108,13 +108,14 @@
   font-family: var(--font-display);
   font-size: clamp(1.5rem, 1.36rem + 0.72vw, 1.9rem);
   line-height: 1;
-  color: #888888;
+  color: color-mix(in srgb, var(--color-paper) 62%, var(--color-crystal) 38%);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--color-crystal) 18%, transparent);
 }
 
 .elementName {
   font-family: var(--font-mono);
   font-size: clamp(0.48rem, 0.45rem + 0.2vw, 0.62rem);
-  color: var(--color-ghost);
+  color: color-mix(in srgb, var(--color-soft-yellow) 58%, var(--color-paper) 42%);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -148,7 +149,7 @@
   margin: 0;
   font-family: var(--font-mono);
   font-size: var(--text-label);
-  color: var(--color-ghost);
+  color: color-mix(in srgb, var(--color-paper) 52%, var(--color-soft-yellow) 48%);
   letter-spacing: var(--tracking-mono);
 }
 
@@ -163,7 +164,7 @@
   margin: 0;
   font-family: var(--font-mono);
   font-size: var(--font-size-lg);
-  color: var(--color-paper);
+  color: color-mix(in srgb, var(--color-paper) 88%, var(--color-crystal) 12%);
   letter-spacing: var(--tracking-mono);
 }
 
@@ -171,7 +172,7 @@
   margin: 0;
   font-family: var(--font-serif);
   font-size: var(--text-body);
-  color: var(--color-ghost);
+  color: color-mix(in srgb, var(--color-soft-yellow) 54%, var(--color-paper) 46%);
 }
 
 .shimmer {

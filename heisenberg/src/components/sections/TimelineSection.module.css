@@ -36,7 +36,7 @@
   font-family: var(--font-mono);
   font-size: var(--text-label);
   letter-spacing: var(--tracking-wide);
-  color: color-mix(in srgb, var(--color-soft-yellow) 55%, var(--color-paper) 45%);
+  color: color-mix(in srgb, var(--color-soft-yellow) 68%, var(--color-paper) 32%);
   text-transform: uppercase;
 }
 
@@ -99,7 +99,8 @@
   font-family: var(--font-mono);
   font-size: var(--text-label);
   letter-spacing: var(--tracking-mono);
-  color: color-mix(in srgb, var(--color-soft-yellow) 60%, var(--color-paper) 40%);
+  color: color-mix(in srgb, var(--color-soft-yellow) 78%, var(--color-paper) 22%);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--color-soft-yellow) 18%, transparent);
   text-transform: uppercase;
 }
 
@@ -199,6 +200,7 @@
 .clearBtn {
   border: 1px solid var(--color-ghost);
   background: transparent;
+  color: color-mix(in srgb, var(--color-soft-yellow) 62%, var(--color-paper) 38%);
   border-radius: 999px;
   padding: 0.45em 0.95em;
   font-family: var(--font-ui);
@@ -211,6 +213,7 @@
 
 .clearBtn:hover {
   border-color: var(--color-toxic-yellow);
+  color: var(--color-paper);
 }
 
 .clearBtn:focus-visible {

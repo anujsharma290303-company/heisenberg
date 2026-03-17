@@ -10,9 +10,12 @@ import { Scanlines } from "./components/canvas/Scanlines";
 import { useExplorerStore } from "./stores/useExplorerStore";
 import { useUIStore } from "./stores/useUIStore";
 import { useTypedData } from "./hooks/useTypedData";
+import { useURLSync } from "./hooks/useURLSync";
 import type { Character } from "./types/character";
 
 function App() {
+  useURLSync();
+
   const grainIntensity = useUIStore((state) => state.grainIntensity);
   const activeQuote = useExplorerStore((state) => state.activeQuote);
 
