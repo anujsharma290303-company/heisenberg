@@ -8,10 +8,6 @@ vi.mock('../../canvas/DesertCanvas', () => ({
   DesertCanvas: () => <div data-testid="desert-canvas" />,
 }));
 
-vi.mock('../../canvas/HeroPortraitScene', () => ({
-  HeroPortraitScene: () => <div data-testid="hero-portrait-scene" />,
-}));
-
 vi.mock('../../ui/GlitchText', () => ({
   GlitchText: ({ children }: { children: string }) => (
     <span data-testid="glitch-title">{children}</span>
@@ -139,20 +135,6 @@ describe('HeroSection', () => {
     render(<HeroSection />);
 
     expect(screen.getByTestId('desert-canvas')).toBeInTheDocument();
-  });
-
-  it('does not render HeroPortraitScene before typewriter completion', () => {
-    render(<HeroSection />);
-
-    expect(screen.queryByTestId('hero-portrait-scene')).not.toBeInTheDocument();
-  });
-
-  it('renders HeroPortraitScene after typewriter onComplete fires', () => {
-    render(<HeroSection />);
-
-    fireEvent.click(screen.getByTestId('typewriter'));
-
-    expect(screen.getByTestId('hero-portrait-scene')).toBeInTheDocument();
   });
 
   it('renders GlitchText showing HEISENBERG', () => {

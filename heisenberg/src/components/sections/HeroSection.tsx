@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { DesertCanvas } from '../canvas/DesertCanvas';
-import { HeroPortraitScene } from '../canvas/HeroPortraitScene';
 import { Counter } from '../ui/Counter';
 import { GlitchText } from '../ui/GlitchText';
 import { Typewriter } from '../ui/Typewriter';
@@ -53,7 +52,6 @@ export function HeroSection({ className }: HeroSectionProps) {
     <section id="section-01" className={rootClasses} ref={sectionRef}>
       <div className={styles.backgroundLayer}>
         <DesertCanvas />
-        {heroTyped ? <HeroPortraitScene /> : null}
       </div>
 
       <div className={styles.content}>

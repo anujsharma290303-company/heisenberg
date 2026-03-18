@@ -1,0 +1,2 @@
+- Heisenberg uses npm.cmd on Windows PowerShell due execution policy blocking npm.ps1.
+- CSS cinematic overhaul (Mar 18 2026): tokens and section module styles tuned for noir look.

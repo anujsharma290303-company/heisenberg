@@ -4,11 +4,18 @@
   flex-direction: column;
   gap: var(--space-sm);
   padding: var(--space-lg);
-  border-left: 3px solid color-mix(in srgb, var(--color-smoke) 75%, transparent);
+  border-left: 3px solid color-mix(in srgb, var(--color-blood) 58%, transparent);
   border-radius: 12px;
   background:
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03), transparent 28%),
-    var(--color-surface);
+    radial-gradient(circle at 82% 14%, color-mix(in srgb, var(--color-aged) 8%, transparent), transparent 36%),
+    repeating-linear-gradient(
+      0deg,
+      rgba(232, 220, 200, 0.025) 0,
+      rgba(232, 220, 200, 0.025) 1px,
+      transparent 1px,
+      transparent 4px
+    ),
+    #1a1510;
   color: var(--color-paper);
   cursor: pointer;
   animation: fadeUp var(--motion-medium) var(--ease-standard) both;
@@ -21,11 +28,20 @@
 
 .card:hover {
   transform: translateY(-6px) scale(1.01);
-  border-left-color: var(--quote-accent);
+  border-left-color: var(--color-blood);
   background:
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.04), transparent 30%),
-    var(--color-surface-elevated);
-  box-shadow: 0 16px 40px color-mix(in srgb, var(--quote-accent) 22%, transparent);
+    radial-gradient(circle at 82% 14%, color-mix(in srgb, var(--color-aged) 14%, transparent), transparent 38%),
+    repeating-linear-gradient(
+      0deg,
+      rgba(232, 220, 200, 0.04) 0,
+      rgba(232, 220, 200, 0.04) 1px,
+      transparent 1px,
+      transparent 4px
+    ),
+    color-mix(in srgb, #1a1510 80%, var(--color-surface-elevated) 20%);
+  box-shadow:
+    -6px 0 0 color-mix(in srgb, var(--color-blood) 75%, transparent),
+    0 16px 40px color-mix(in srgb, var(--color-blood) 24%, transparent);
 }
 
 .card:focus-visible {

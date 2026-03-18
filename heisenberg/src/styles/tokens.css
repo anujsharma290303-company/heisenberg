@@ -1,7 +1,12 @@
 :root {
+  --grain-opacity: 0.06;
+
   --color-void: #0b0c10;
   --color-surface: #1c1f26;
   --color-surface-elevated: #252933;
+  --color-noir: #000000;
+  --color-aged: #e8dcc8;
+  --color-blood: #8b0000;
 
   --color-heisenberg-dark: #0d3b2e;
   --color-heisenberg-teal: #1f7a63;
@@ -24,7 +29,7 @@
   --color-ghost: #8e5b3a;
   --color-danger: #d4ac0d;
   --color-green: #2ecc71;
-  --color-grain: rgba(255, 255, 255, 0.028);
+  --color-grain: rgba(255, 255, 255, var(--grain-opacity));
 
   --space-2xs: clamp(0.25rem, 0.24rem + 0.05vw, 0.3rem);
   --space-xs: clamp(0.5rem, 0.48rem + 0.1vw, 0.625rem);
@@ -49,9 +54,9 @@
   --space-4: var(--space-md);
   --space-8: var(--space-lg);
 
-  --tracking-display: 0.04em;
+  --tracking-display: 0.12em;
   --tracking-mono: 0.2em;
-  --tracking-wide: 0.35em;
+  --tracking-wide: 0.5em;
 
   --motion-fast: 180ms;
   --motion-medium: 320ms;
@@ -60,8 +65,10 @@
   --ease-emphasis: cubic-bezier(0.18, 0.89, 0.32, 1.28);
   --ease-reveal: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
-  --grain-opacity-normal: 0.028;
+  --grain-opacity-normal: var(--grain-opacity);
   --grain-opacity-elevated: 0.07;
+  --vignette-strength: 0.95;
+  --letterbox-height: 60px;
 
   --font-display: 'Bebas Neue', sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;

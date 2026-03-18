@@ -10,13 +10,35 @@
   cursor: pointer;
 }
 
+.overlay::before,
+.overlay::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: var(--letterbox-height);
+  background: var(--color-noir);
+  pointer-events: none;
+  z-index: 2;
+  animation: fadeIn var(--motion-medium) var(--ease-standard) both;
+}
+
+.overlay::before {
+  top: 0;
+}
+
+.overlay::after {
+  bottom: 0;
+}
+
 .content {
   position: relative;
+  z-index: 3;
   cursor: default;
   width: min(780px, 90vw);
-  max-height: 90svh;
+  max-height: calc(100svh - (var(--letterbox-height) * 2));
   overflow-y: auto;
-  padding: var(--space-3xl);
+  padding: calc(var(--space-2xl) + var(--space-sm)) var(--space-2xl);
   display: flex;
   flex-direction: column;
   gap: var(--space-lg);

@@ -3,9 +3,9 @@
   min-height: 100svh;
   padding: var(--space-2xl) var(--space-lg);
   background:
-    radial-gradient(circle at 86% 12%, rgba(79, 195, 247, 0.12), transparent 34%),
-    radial-gradient(circle at 12% 88%, rgba(46, 204, 113, 0.16), transparent 40%),
-    linear-gradient(180deg, #0b0c10 0%, #0d3b2e 55%, #0b0c10 100%);
+    radial-gradient(circle at 86% 12%, color-mix(in srgb, var(--color-blood) 12%, transparent), transparent 34%),
+    radial-gradient(circle at 12% 88%, color-mix(in srgb, var(--color-aged) 14%, transparent), transparent 38%),
+    linear-gradient(180deg, var(--color-noir) 0%, color-mix(in srgb, var(--color-noir) 68%, #1a1510 32%) 55%, var(--color-noir) 100%);
 }
 
 .sectionRoot::before {
@@ -51,6 +51,7 @@
 }
 
 .quotesGrid {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: var(--space-md);
@@ -60,8 +61,27 @@
   border-radius: 16px;
   border: 1px solid color-mix(in srgb, var(--color-smoke) 76%, transparent);
   background:
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.02), transparent 24%),
-    color-mix(in srgb, var(--color-surface) 86%, black 14%);
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.025), transparent 24%),
+    #1a1510;
+}
+
+.quotesGrid::before {
+  content: 'CASE FILE';
+  position: absolute;
+  right: var(--space-lg);
+  top: var(--space-lg);
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 1.32rem + 0.92vw, 2rem);
+  letter-spacing: var(--tracking-wide);
+  color: color-mix(in srgb, var(--color-aged) 18%, transparent);
+  transform: rotate(-8deg);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.quotesGrid > * {
+  position: relative;
+  z-index: 1;
 }
 
 @container quotes-grid (max-width: 500px) {

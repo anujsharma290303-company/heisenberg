@@ -8,12 +8,12 @@
   padding: var(--space-lg);
   text-align: left;
   background:
-    linear-gradient(to bottom, rgba(79, 195, 247, 0.04), transparent 24%),
-    color-mix(in srgb, var(--color-surface) 88%, black 12%);
-  border: 1px solid var(--color-smoke);
+    linear-gradient(to bottom, color-mix(in srgb, var(--color-noir) 14%, transparent), transparent 22%),
+    var(--color-aged);
+  border: 2px solid #2a2a2a;
   border-radius: 12px;
   overflow: hidden;
-  color: var(--color-paper);
+  color: #1a1a1a;
   cursor: pointer;
   transform-style: preserve-3d;
   animation: charIn var(--motion-medium) var(--ease-standard) both;
@@ -32,11 +32,34 @@
   right: 0;
   height: 3px;
   border-radius: 12px 12px 0 0;
-  background: linear-gradient(to right, var(--char-accent), transparent);
+  background: linear-gradient(to right, color-mix(in srgb, var(--char-accent) 28%, transparent), transparent);
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 18%, rgba(0, 0, 0, 0.09), transparent 34%),
+    radial-gradient(circle at 80% 72%, rgba(0, 0, 0, 0.07), transparent 36%),
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.028) 0,
+      rgba(0, 0, 0, 0.028) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  mix-blend-mode: multiply;
+  opacity: 0.75;
 }
 
 .card:hover {
+  color: var(--color-paper);
   border-color: color-mix(in srgb, var(--char-accent) 55%, var(--color-smoke) 45%);
+  background:
+    linear-gradient(to bottom, color-mix(in srgb, var(--char-accent) 20%, transparent), transparent 22%),
+    var(--color-surface);
   box-shadow:
     0 18px 32px rgba(0, 0, 0, 0.45),
     0 0 24px color-mix(in srgb, var(--char-accent) 22%, transparent);
@@ -111,7 +134,7 @@
 .description {
   font-family: var(--font-serif);
   font-size: var(--text-body);
-  color: var(--color-paper);
+  color: currentcolor;
   opacity: 0.92;
 }
 
@@ -130,8 +153,17 @@
   border: 1px solid color-mix(in srgb, var(--color-ghost) 45%, transparent);
   border-radius: 999px;
   padding: 0.3em 0.7em;
-  color: var(--color-paper);
-  background: color-mix(in srgb, var(--color-surface) 72%, transparent);
+  color: #252525;
+  background: color-mix(in srgb, var(--color-aged) 90%, white 10%);
+}
+
+.badge:last-child {
+  border: 2px solid var(--color-blood);
+  color: var(--color-blood);
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  transform: rotate(-5deg);
+  background: color-mix(in srgb, var(--color-aged) 96%, transparent);
 }
 
 .charIn {
