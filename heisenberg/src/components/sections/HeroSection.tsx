@@ -16,6 +16,7 @@ export function HeroSection({ className }: HeroSectionProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [heroTyped, setHeroTyped] = useState(false);
   const [revealed, setRevealed] = useState(false);
+  const [isShaking, setIsShaking] = useState(false);
   const setSection = useUIStore((state) => state.setSection);
   const setGrainIntensity = useUIStore((state) => state.setGrainIntensity);
 
@@ -39,12 +40,28 @@ export function HeroSection({ className }: HeroSectionProps) {
     };
   }, [setSection]);
 
+  useEffect(() => {
+    const shakeOnId = window.setTimeout(() => {
+      setIsShaking(true);
+    }, 2000);
+
+    const shakeOffId = window.setTimeout(() => {
+      setIsShaking(false);
+    }, 2300);
+
+    return () => {
+      window.clearTimeout(shakeOnId);
+      window.clearTimeout(shakeOffId);
+    };
+  }, []);
+
   const rootClasses = [
     'section',
     styles.sectionRoot,
     className,
     revealed ? styles.revealed : '',
     revealed ? 'revealed' : '',
+    isShaking ? styles.shake : '',
   ]
     .filter(Boolean)
     .join(' ');
@@ -65,6 +82,8 @@ export function HeroSection({ className }: HeroSectionProps) {
 
   return (
     <section id="section-01" className={rootClasses} ref={sectionRef}>
+      <div className={styles.flash} />
+
       <div className={styles.backgroundLayer} data-reveal="1">
         <DesertCanvas />
       </div>
@@ -77,7 +96,13 @@ export function HeroSection({ className }: HeroSectionProps) {
         viewport={{ once: true }}
       >
         <motion.h1 className={styles.title} data-reveal="2" variants={itemVariants}>
-          <GlitchText always={true}>HEISENBERG</GlitchText>
+          <div className={styles.bulletHoleWrapper}>
+            <GlitchText always={true}>HEISENBERG</GlitchText>
+            <div className={styles.bulletHole} />
+            <div className={styles.crack} />
+            <div className={styles.smoke} />
+            <div className={styles.shockwave} />
+          </div>
         </motion.h1>
 
         <motion.div className={styles.subtitle} data-reveal="3" variants={itemVariants}>

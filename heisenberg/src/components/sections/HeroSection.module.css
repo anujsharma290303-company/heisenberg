@@ -77,6 +77,16 @@
   text-align: center;
 }
 
+.flash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0;
+  background: radial-gradient(circle at 50% 38%, rgba(255, 255, 255, 0.85), transparent 45%);
+  animation: heroFlash 0.3s ease-out 2s both;
+}
+
 .title {
   position: relative;
   z-index: 1;
@@ -88,6 +98,64 @@
   text-shadow:
     0 0 60px var(--color-hat),
     0 0 120px rgba(212, 160, 23, 0.3);
+}
+
+.bulletHoleWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.bulletHole {
+  position: absolute;
+  top: 38%;
+  left: 58%;
+  width: clamp(0.5rem, 0.46rem + 0.2vw, 0.7rem);
+  height: clamp(0.5rem, 0.46rem + 0.2vw, 0.7rem);
+  border-radius: 50%;
+  background: radial-gradient(circle, #090909 32%, #2d2d2d 70%, transparent 100%);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.7),
+    0 0 8px rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  animation: holePop 0.2s ease-out 2s forwards;
+}
+
+.crack {
+  position: absolute;
+  top: 39%;
+  left: 58%;
+  width: clamp(2.2rem, 2rem + 1vw, 3rem);
+  height: 1px;
+  transform-origin: left center;
+  background: linear-gradient(to right, rgba(232, 226, 213, 0.6), transparent);
+  opacity: 0;
+  animation: crackSpread 0.35s var(--ease-reveal) 2.02s forwards;
+}
+
+.smoke {
+  position: absolute;
+  top: 28%;
+  left: 56%;
+  width: clamp(2rem, 1.7rem + 1.4vw, 3rem);
+  height: clamp(1.4rem, 1.2rem + 1vw, 2.1rem);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 226, 213, 0.42), transparent 68%);
+  filter: blur(6px);
+  opacity: 0;
+  animation: smokeRise 0.8s var(--ease-reveal) 2.1s forwards;
+}
+
+.shockwave {
+  position: absolute;
+  top: 38%;
+  left: 58%;
+  width: clamp(0.5rem, 0.46rem + 0.2vw, 0.7rem);
+  height: clamp(0.5rem, 0.46rem + 0.2vw, 0.7rem);
+  border-radius: 50%;
+  border: 1px solid rgba(232, 226, 213, 0.5);
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  animation: shockwavePulse 0.45s var(--ease-reveal) 2s forwards;
 }
 
 .title::before {
@@ -161,6 +229,77 @@
 
 .revealed {
   animation: fadeIn var(--motion-medium) var(--ease-standard);
+}
+
+@keyframes heroFlash {
+  0% {
+    opacity: 0;
+  }
+  45% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes holePop {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes crackSpread {
+  from {
+    opacity: 0;
+    transform: rotate(-12deg) scaleX(0);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(-12deg) scaleX(1);
+  }
+}
+
+@keyframes smokeRise {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.8);
+  }
+  35% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-1.1rem) scale(1.25);
+  }
+}
+
+@keyframes shockwavePulse {
+  0% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(4.2);
+  }
+}
+
+@keyframes screenShake {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  20% { transform: translate(-3px, 2px) rotate(-0.5deg); }
+  40% { transform: translate(3px, -2px) rotate(0.5deg); }
+  60% { transform: translate(-2px, 3px) rotate(-0.3deg); }
+  80% { transform: translate(2px, -1px) rotate(0.3deg); }
+}
+
+.shake {
+  animation: screenShake 0.3s ease-out;
 }
 
 @media (max-width: 768px) {

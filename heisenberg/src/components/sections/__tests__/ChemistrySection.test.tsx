@@ -250,12 +250,12 @@ describe('ChemistrySection', () => {
     }
   });
 
-  it('applies staggered animation delay index * 0.05s to tiles', () => {
+  it('applies burst delay custom property using index * 0.08s to tiles', () => {
     render(<ChemistrySection />);
 
-    expect(screen.getByTestId('element-tile-C')).toHaveStyle({ animationDelay: '0s' });
-    expect(screen.getByTestId('element-tile-H')).toHaveStyle({ animationDelay: '0.05s' });
-    expect(screen.getByTestId('element-tile-Hg').getAttribute('style')).toContain('animation-delay: 0.35');
+    expect(screen.getByTestId('element-tile-C').getAttribute('style')).toContain('--burst-delay: 0s');
+    expect(screen.getByTestId('element-tile-H').getAttribute('style')).toContain('--burst-delay: 0.08s');
+    expect(screen.getByTestId('element-tile-Hg').getAttribute('style')).toContain('--burst-delay: 0.56s');
   });
 
   it('calls selectElement with symbol and molecules when clicking a different tile', () => {

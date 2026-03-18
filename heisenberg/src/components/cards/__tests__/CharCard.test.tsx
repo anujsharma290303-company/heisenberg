@@ -16,6 +16,7 @@ const characterFixture: Character = {
   id: 'walt',
   name: 'Walter White',
   alias: 'Heisenberg',
+  bestQuote: 'I am the one who knocks.',
   desc: 'A chemistry teacher turned meth kingpin, driven by pride and survival.',
   color: '#4FC3F7',
   seasons: [1, 2, 3, 4, 5],
@@ -79,11 +80,11 @@ describe('CharCard', () => {
     expect(card).toHaveAttribute('data-accent-height', '3px');
   });
 
-  it('sets animationDelay inline as index*0.1s and uses charIn animation class', () => {
+  it('sets deal delay inline as index*0.15s and uses charIn animation class', () => {
     render(<CharCard character={characterFixture} index={3} />);
 
     const card = screen.getByTestId('char-card-walt');
-    expect(card).toHaveStyle('animation-delay: 0.3s');
+    expect(card).toHaveStyle('--deal-delay: 0.45s');
     expect(card).toHaveClass('charIn');
   });
 

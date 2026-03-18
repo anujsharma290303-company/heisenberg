@@ -18,7 +18,12 @@ export interface CharCardProps {
 
 type CharCardInlineStyle = React.CSSProperties & {
   '--char-accent'?: string;
+  '--card-color'?: string;
+  '--deal-delay'?: string;
+  '--deal-rotate'?: string;
 };
+
+const DEAL_ROTATIONS = [-3, -1, 1, 3, 0] as const;
 
 const CHARACTER_IMAGE_BY_ID: Record<string, string> = {
   walt: walterImage,
@@ -60,7 +65,9 @@ export function CharCard({ character, index, className }: CharCardProps) {
 
   const inlineStyle: CharCardInlineStyle = {
     '--char-accent': character.color,
-    animationDelay: `${(index * 0.1).toFixed(1)}s`,
+    '--card-color': character.color,
+    '--deal-delay': `${(index * 0.15).toFixed(2)}s`,
+    '--deal-rotate': `${DEAL_ROTATIONS[index % DEAL_ROTATIONS.length]}deg`,
   };
 
   const classes = [
@@ -88,26 +95,39 @@ export function CharCard({ character, index, className }: CharCardProps) {
       data-selected-shadow={isSelected ? '0 0 20px' : ''}
       aria-pressed={isSelected}
     >
-      {imageSrc ? (
-        <div className={styles.media}>
-          <img
-            src={imageSrc}
-            alt={character.name}
-            className={styles.portrait}
-            loading="lazy"
-            decoding="async"
-          />
-          <span className={styles.mediaShade} />
+      <div className={styles.cardInner}>
+        <div className={styles.cardFront}>
+          {imageSrc ? (
+            <div className={styles.media}>
+              <img
+                src={imageSrc}
+                alt={character.name}
+                className={styles.portrait}
+                loading="lazy"
+                decoding="async"
+              />
+              <span className={styles.mediaShade} />
+            </div>
+          ) : null}
+
+          <h3 className={styles.name}>{character.name}</h3>
+          <p className={styles.alias}>{character.alias}</p>
+          <p className={styles.description}>{character.desc}</p>
+
+          <div className={styles.badges}>
+            <span className={styles.badge}>{character.seasons.map((season) => `S${season}`).join(', ')}</span>
+            <span className={styles.badge}>{character.role}</span>
+          </div>
+
+          <div className={styles.cardShine} />
         </div>
-      ) : null}
 
-      <h3 className={styles.name}>{character.name}</h3>
-      <p className={styles.alias}>{character.alias}</p>
-      <p className={styles.description}>{character.desc}</p>
-
-      <div className={styles.badges}>
-        <span className={styles.badge}>{character.seasons.map((season) => `S${season}`).join(', ')}</span>
-        <span className={styles.badge}>{character.role}</span>
+        <div className={styles.cardBack}>
+          <p className={styles.quote}>
+            "{character.bestQuote}"
+          </p>
+          <span className={styles.quoteAuthor}>- {character.name}</span>
+        </div>
       </div>
     </button>
   );

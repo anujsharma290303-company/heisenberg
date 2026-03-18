@@ -54,9 +54,22 @@
 }
 
 .tilesGrid {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--space-sm);
+}
+
+@keyframes screenShake {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  20% { transform: translate(-3px, 2px) rotate(-0.5deg); }
+  40% { transform: translate(3px, -2px) rotate(0.5deg); }
+  60% { transform: translate(-2px, 3px) rotate(-0.3deg); }
+  80% { transform: translate(2px, -1px) rotate(0.3deg); }
+}
+
+.screenShake {
+  animation: screenShake 0.3s ease-out;
 }
 
 .tile {
@@ -87,6 +100,49 @@
     border-color var(--motion-fast) var(--ease-standard);
 }
 
+.tile,
+.elementTile {
+  --burst-x: 0px;
+  --burst-y: 0px;
+  --tile-color: #888888;
+  animation: elementBurst 0.8s var(--ease-reveal) both;
+  animation-delay: var(--burst-delay, 0s);
+  animation-play-state: paused;
+}
+
+.revealed .tile,
+.revealed .elementTile {
+  animation-play-state: running;
+}
+
+.tile.landed,
+.elementTile.landed {
+  animation: impactGlow 0.5s ease-out;
+}
+
+.landed {
+  will-change: box-shadow;
+}
+
+.explosionCore {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    #ffffff,
+    var(--color-hat),
+    transparent
+  );
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  animation: explosionFlash 0.5s ease-out both;
+  opacity: 0;
+}
+
 .tile:focus-visible {
   outline: 2px solid var(--color-crystal);
   outline-offset: 2px;
@@ -108,6 +164,14 @@
     0 0 0 1px color-mix(in srgb, var(--color-neon-green) 35%, transparent),
     0 0 28px color-mix(in srgb, var(--color-neon-green) 46%, transparent);
   animation: pulse 2s ease-in-out infinite;
+}
+
+.tileActive .explosionCore {
+  opacity: 1;
+}
+
+.revealed .tilesGrid > .explosionCore {
+  opacity: 1;
 }
 
 .tileDimmed {

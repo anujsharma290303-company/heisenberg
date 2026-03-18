@@ -8,6 +8,7 @@ const mockCharacter: Character = {
   id: 'walt',
   name: 'Walter White',
   alias: 'Heisenberg',
+  bestQuote: 'I am the one who knocks.',
   desc: 'A chemistry teacher turned meth kingpin.',
   color: '#4FC3F7',
   seasons: [1, 2, 3, 4, 5],

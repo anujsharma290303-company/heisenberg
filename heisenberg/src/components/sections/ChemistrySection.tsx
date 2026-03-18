@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { motion } from 'framer-motion';
 
 import { MoleculeCanvas } from '../canvas/MoleculeCanvas';
@@ -13,9 +13,27 @@ export interface ChemistrySectionProps {
   className?: string;
 }
 
+const getBurstOffset = (index: number) => {
+  const col = index % 4;
+  const row = Math.floor(index / 4);
+  const centerCol = 1.5;
+  const centerRow = 0.5;
+  const x = (col - centerCol) * 200;
+  const y = (row - centerRow) * 200;
+  return { x, y };
+};
+
+type BurstTileStyle = CSSProperties & {
+  '--burst-x'?: string;
+  '--burst-y'?: string;
+  '--burst-delay'?: string;
+  '--tile-color'?: string;
+};
+
 export function ChemistrySection({ className }: ChemistrySectionProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [revealed, setRevealed] = useState(false);
+  const [isShaking, setIsShaking] = useState(false);
   const setSection = useUIStore((state) => state.setSection);
   const activeElement = useChemStore((state) => state.activeElement);
   const activeMolecule = useChemStore((state) => state.activeMolecule);
@@ -41,6 +59,21 @@ export function ChemistrySection({ className }: ChemistrySectionProps) {
       observer.disconnect();
     };
   }, [setSection]);
+
+  useEffect(() => {
+    if (!revealed) {
+      return;
+    }
+
+    setIsShaking(true);
+    const timeoutId = window.setTimeout(() => {
+      setIsShaking(false);
+    }, 300);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [revealed]);
 
   const elementsLoader = useCallback(async () => {
     const module = await import('../../data/elements.json');
@@ -101,6 +134,7 @@ export function ChemistrySection({ className }: ChemistrySectionProps) {
     styles.sectionRoot,
     revealed ? styles.revealed : '',
     revealed ? 'revealed' : '',
+    isShaking ? styles.screenShake : '',
     className,
   ]
     .filter(Boolean)
@@ -163,12 +197,16 @@ export function ChemistrySection({ className }: ChemistrySectionProps) {
           <div className={styles.layout}>
             <div className={styles.leftCol}>
               <motion.div className={styles.tilesGrid} data-reveal="2" variants={itemVariants}>
+                <div className={styles.explosionCore} aria-hidden="true" />
                 {elements.map((element, index) => {
                   const isActive = activeElement === element.symbol;
                   const hasActive = activeElement !== null;
+                  const burst = getBurstOffset(index);
                   const tileClasses = [
                     styles.tile,
+                    styles.elementTile,
                     isActive ? styles.tileActive : '',
+                    isActive ? styles.landed : '',
                     isActive ? 'active-tile' : '',
                     hasActive && !isActive ? styles.tileDimmed : '',
                     hasActive && !isActive ? 'dimmed-tile' : '',
@@ -184,7 +222,10 @@ export function ChemistrySection({ className }: ChemistrySectionProps) {
                       className={tileClasses}
                       aria-label={`Select element ${element.symbol}`}
                       style={{
-                        animationDelay: `${index * 0.05}s`,
+                        '--burst-x': `${burst.x}px`,
+                        '--burst-y': `${burst.y}px`,
+                        '--burst-delay': `${index * 0.08}s`,
+                        '--tile-color': element.color,
                         ...(isActive
                           ? {
                               background: hexToRgba(element.color, 0.1),
@@ -192,8 +233,8 @@ export function ChemistrySection({ className }: ChemistrySectionProps) {
                               boxShadow: `0 0 20px ${hexToRgba(element.color, 0.44)}`,
                               transform: 'scale(1.1)',
                             }
-                          : null),
-                      }}
+                            : null),
+                          } as BurstTileStyle}
                       onClick={() => {
                         handleTileClick(element.symbol);
                       }}
