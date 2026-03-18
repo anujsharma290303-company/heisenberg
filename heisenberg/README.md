@@ -1,5 +1,36 @@
 # React + TypeScript + Vite
 
+## Deploy to Cloudflare Pages
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Log in to Cloudflare from this project:
+
+```bash
+npx wrangler login
+```
+
+3. Create a Pages project one time (if it does not exist yet):
+
+```bash
+npx wrangler pages project create heisenberg
+```
+
+4. Build and deploy:
+
+```bash
+npm run cf:deploy
+```
+
+Notes:
+- Build output directory is `dist`.
+- Framework preset is Vite.
+- If you create the project in the dashboard first, keep the project name as `heisenberg` to match scripts and `wrangler.toml`.
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
