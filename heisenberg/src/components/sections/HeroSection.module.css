@@ -83,11 +83,26 @@
   color: var(--color-paper);
   font-size: var(--text-display);
   font-family: var(--font-display);
-  letter-spacing: var(--tracking-display);
+  letter-spacing: 0.15em;
+  animation: zoomIn 1.5s var(--ease-reveal) both;
   text-shadow:
-    0 0 18px rgba(0, 0, 0, 0.42),
-    0 0 42px rgba(0, 0, 0, 0.28),
-    0 0 40px var(--color-hat);
+    0 0 60px var(--color-hat),
+    0 0 120px rgba(212, 160, 23, 0.3);
+}
+
+.title::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(72vw, 36rem);
+  height: clamp(5rem, 4rem + 8vw, 10rem);
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--color-hat) 46%, transparent) 0%, transparent 70%);
+  filter: blur(24px);
+  opacity: 0.5;
+  z-index: -1;
+  animation: pulse 2.4s ease-in-out infinite;
 }
 
 .subtitle {
@@ -97,6 +112,8 @@
   margin-top: var(--space-4);
   opacity: 0.98;
   text-shadow: 0 0 14px rgba(0, 0, 0, 0.36);
+  animation: fadeUp 1s var(--ease-reveal) both;
+  animation-delay: 0.25s;
 }
 
 .counters {
@@ -105,7 +122,28 @@
   justify-content: center;
   gap: var(--space-8);
   margin-top: var(--space-8);
-  animation: fadeUp 0.8s var(--ease-standard);
+  animation: fadeUp 1s var(--ease-reveal) both;
+  animation-delay: 0.45s;
+}
+
+.counters > * {
+  animation: zoomIn 0.9s var(--ease-reveal) both;
+}
+
+.counters > *:nth-child(1) {
+  animation-delay: 0.5s;
+}
+
+.counters > *:nth-child(2) {
+  animation-delay: 0.65s;
+}
+
+.counters > *:nth-child(3) {
+  animation-delay: 0.8s;
+}
+
+.counters > *:nth-child(4) {
+  animation-delay: 0.95s;
 }
 
 .scrollPrompt {

@@ -16,7 +16,7 @@
   color: #1a1a1a;
   cursor: pointer;
   transform-style: preserve-3d;
-  animation: charIn var(--motion-medium) var(--ease-standard) both;
+  animation: charIn 0.9s var(--ease-reveal) both;
   transition:
     transform var(--motion-fast) var(--ease-standard),
     border-color var(--motion-fast) var(--ease-standard),

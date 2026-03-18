@@ -6,13 +6,15 @@ export interface FilmGrainProps {
   intensity?: number;
 }
 
+const DEFAULT_INTENSITY = 0.06;
+
 export function FilmGrain({ intensity }: FilmGrainProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const frameRef = useRef<number | null>(null);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
 
   const grainIntensity = useUIStore((state) => state.grainIntensity);
-  const effectiveIntensity = intensity ?? grainIntensity;
+  const effectiveIntensity = intensity ?? Math.max(grainIntensity, DEFAULT_INTENSITY);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -51,6 +53,9 @@ export function FilmGrain({ intensity }: FilmGrainProps) {
         const { data } = imageData;
 
         for (let i = 0; i < data.length; i += 4) {
+          data[i] = Math.random() * 255 * effectiveIntensity;
+          data[i + 1] = Math.random() * 255 * effectiveIntensity;
+          data[i + 2] = Math.random() * 255 * effectiveIntensity;
           data[i + 3] = Math.random() * 255 * effectiveIntensity;
         }
 

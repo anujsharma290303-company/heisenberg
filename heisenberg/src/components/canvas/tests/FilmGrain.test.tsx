@@ -54,4 +54,36 @@ describe('FilmGrain', () => {
 
     expect(disconnect).toHaveBeenCalled();
   });
+
+  it('updates all RGBA channels to create colored grain noise', () => {
+    const rafCallbacks: FrameRequestCallback[] = [];
+    vi.spyOn(globalThis, 'requestAnimationFrame').mockImplementation((callback: FrameRequestCallback) => {
+      rafCallbacks.push(callback);
+      return rafCallbacks.length;
+    });
+
+    vi.spyOn(Math, 'random').mockReturnValue(1);
+
+    const pixels = new Uint8ClampedArray(4);
+    const ctx = {
+      getImageData: vi.fn(() => ({ data: pixels } as ImageData)),
+      putImageData: vi.fn(),
+    } as unknown as CanvasRenderingContext2D;
+
+    vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockImplementation(
+      ((contextId: string) => (contextId === '2d' ? ctx : null)) as unknown as HTMLCanvasElement['getContext']
+    );
+
+    render(<FilmGrain intensity={0.06} />);
+
+    const drawFrame = rafCallbacks[0];
+    if (drawFrame) {
+      drawFrame(0);
+    }
+
+    expect(pixels[0]).toBe(15);
+    expect(pixels[1]).toBe(15);
+    expect(pixels[2]).toBe(15);
+    expect(pixels[3]).toBe(15);
+  });
 });

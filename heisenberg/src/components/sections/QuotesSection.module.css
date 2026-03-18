@@ -33,6 +33,7 @@
   justify-content: space-between;
   align-items: end;
   gap: var(--space-sm);
+  animation: zoomIn 1s var(--ease-reveal) both;
 }
 
 .title {

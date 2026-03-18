@@ -79,7 +79,7 @@
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  animation: scaleIn 0.35s var(--ease-standard) both;
+  animation: scaleIn 0.75s var(--ease-reveal) both;
   transition:
     opacity var(--motion-fast) var(--ease-standard),
     transform var(--motion-fast) var(--ease-standard),
@@ -107,6 +107,7 @@
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--color-neon-green) 35%, transparent),
     0 0 28px color-mix(in srgb, var(--color-neon-green) 46%, transparent);
+  animation: pulse 2s ease-in-out infinite;
 }
 
 .tileDimmed {
@@ -152,7 +153,7 @@
       transparent 5px
     ),
     color-mix(in srgb, #0d1a0d 84%, transparent);
-  animation: fadeUp 0.4s var(--ease-standard);
+  animation: slideInRight 0.85s var(--ease-reveal) both;
 }
 
 .connectionNote {

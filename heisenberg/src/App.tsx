@@ -7,6 +7,7 @@ import { QuotesSection } from "./components/sections/QuotesSection";
 import { ChemistrySection } from "./components/sections/ChemistrySection";
 import { QuoteReveal } from "./components/overlays/QuoteReveal";
 import { Scanlines } from "./components/canvas/Scanlines";
+import { Letterbox } from "./components/ui/Letterbox";
 import { useExplorerStore } from "./stores/useExplorerStore";
 import { useUIStore } from "./stores/useUIStore";
 import { useTypedData } from "./hooks/useTypedData";
@@ -35,6 +36,7 @@ function App() {
     <>
       <FilmGrain intensity={grainIntensity} />
       <Scanlines />
+      <Letterbox />
       <DotNav />
 
       <div className="scroll-container">

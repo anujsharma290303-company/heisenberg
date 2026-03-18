@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 
 import { DesertCanvas } from '../canvas/DesertCanvas';
 import { Counter } from '../ui/Counter';
@@ -48,18 +49,38 @@ export function HeroSection({ className }: HeroSectionProps) {
     .filter(Boolean)
     .join(' ');
 
+  const containerVariants = {
+    hidden: { opacity: 0, y: 24 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, staggerChildren: 0.15 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 24 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+  };
+
   return (
     <section id="section-01" className={rootClasses} ref={sectionRef}>
-      <div className={styles.backgroundLayer}>
+      <div className={styles.backgroundLayer} data-reveal="1">
         <DesertCanvas />
       </div>
 
-      <div className={styles.content}>
-        <h1 className={styles.title}>
+      <motion.div
+        className={styles.content}
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+      >
+        <motion.h1 className={styles.title} data-reveal="2" variants={itemVariants}>
           <GlitchText always={true}>HEISENBERG</GlitchText>
-        </h1>
+        </motion.h1>
 
-        <div className={styles.subtitle}>
+        <motion.div className={styles.subtitle} data-reveal="3" variants={itemVariants}>
           <Typewriter
             text="I am the one who knocks."
             onComplete={() => {
@@ -67,19 +88,19 @@ export function HeroSection({ className }: HeroSectionProps) {
               setGrainIntensity(0.07);
             }}
           />
-        </div>
+        </motion.div>
 
         {heroTyped ? (
-          <div className={styles.counters}>
+          <motion.div className={styles.counters} data-reveal="4" variants={itemVariants}>
             <Counter to={5} label="SEASONS" />
             <Counter to={62} label="EPISODES" />
             <Counter to={16} label="EMMY AWARDS" suffix="+" />
             <Counter to={9} label="IMDB RATING" suffix=".5/10" />
-          </div>
+          </motion.div>
         ) : null}
-      </div>
+      </motion.div>
 
-      <div className={styles.scrollPrompt} data-testid="scroll-prompt">
+      <div className={styles.scrollPrompt} data-testid="scroll-prompt" data-reveal="5">
         SCROLL
       </div>
     </section>

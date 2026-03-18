@@ -18,7 +18,7 @@
     #1a1510;
   color: var(--color-paper);
   cursor: pointer;
-  animation: fadeUp var(--motion-medium) var(--ease-standard) both;
+  animation: zoomIn 0.9s var(--ease-reveal) both;
   transition:
     transform var(--motion-fast) var(--ease-standard),
     border-left-color var(--motion-fast) var(--ease-standard),
@@ -27,7 +27,7 @@
 }
 
 .card:hover {
-  transform: translateY(-6px) scale(1.01);
+  transform: translateY(-14px) scale(1.03);
   border-left-color: var(--color-blood);
   background:
     radial-gradient(circle at 82% 14%, color-mix(in srgb, var(--color-aged) 14%, transparent), transparent 38%),
@@ -41,7 +41,7 @@
     color-mix(in srgb, #1a1510 80%, var(--color-surface-elevated) 20%);
   box-shadow:
     -6px 0 0 color-mix(in srgb, var(--color-blood) 75%, transparent),
-    0 16px 40px color-mix(in srgb, var(--color-blood) 24%, transparent);
+    0 32px 60px color-mix(in srgb, var(--color-blood) 36%, transparent);
 }
 
 .card:focus-visible {

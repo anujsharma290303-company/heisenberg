@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 
 import { CharCard } from '../cards/CharCard';
 import { GlitchText } from '../ui/GlitchText';
@@ -63,22 +64,44 @@ export function TimelineSection({ className }: TimelineSectionProps) {
     .filter(Boolean)
     .join(' ');
 
+  const containerVariants = {
+    hidden: { opacity: 0, y: 24 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, staggerChildren: 0.15 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 24 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+  };
+
   return (
     <section id="section-02" className={rootClasses} ref={sectionRef}>
-      <div className={styles.inner}>
+      <motion.div
+        className={styles.inner}
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+      >
         <header className={styles.header}>
-          <p className={styles.kicker}>02 / CHARACTER TIMELINE</p>
+          <motion.p className={styles.kicker} data-reveal="1" variants={itemVariants}>
+            02 / CHARACTER TIMELINE
+          </motion.p>
         </header>
 
         <div className={styles.timelineWrap}>
-          <div className={styles.timelineTrack}>
+          <motion.div className={styles.timelineTrack} data-reveal="2" variants={itemVariants}>
             <div
               className={styles.timelineFill}
               data-testid="timeline-fill"
               data-animation="expandBar"
               data-timeline="scroll"
             />
-          </div>
+          </motion.div>
 
           <div className={styles.markerRow}>
             {SEASON_MARKERS.map((marker) => (
@@ -97,11 +120,11 @@ export function TimelineSection({ className }: TimelineSectionProps) {
         </div>
 
         {dataState.status === 'loading' || dataState.status === 'idle' ? (
-          <div className={styles.cardsRow}>
+          <motion.div className={styles.cardsRow} data-reveal="3" variants={itemVariants}>
             {Array.from({ length: 5 }).map((_, index) => (
               <div key={index} data-testid="timeline-shimmer" className={`skeleton shimmer ${styles.shimmer}`} />
             ))}
-          </div>
+          </motion.div>
         ) : null}
 
         {dataState.status === 'error' ? (
@@ -115,18 +138,18 @@ export function TimelineSection({ className }: TimelineSectionProps) {
 
         {dataState.status === 'success' ? (
           dataState.data.length > 0 ? (
-            <div className={styles.cardsRow} data-testid="timeline-cards-row">
+            <motion.div className={styles.cardsRow} data-testid="timeline-cards-row" data-reveal="3" variants={itemVariants}>
               {dataState.data.map((character, index) => (
                 <CharCard key={character.id} character={character} index={index} />
               ))}
-            </div>
+            </motion.div>
           ) : (
             <p className={styles.emptyText}>No characters found.</p>
           )
         ) : null}
 
         {dataState.status === 'success' ? (
-          <div className={styles.selectionPanel}>
+          <motion.div className={styles.selectionPanel} data-reveal="4" variants={itemVariants}>
             {selectedChar ? (
               <>
                 <GlitchText
@@ -149,9 +172,9 @@ export function TimelineSection({ className }: TimelineSectionProps) {
             ) : (
               <p className={styles.selectionHint}>Select a character card to focus the quote wall.</p>
             )}
-          </div>
+          </motion.div>
         ) : null}
-      </div>
+      </motion.div>
     </section>
   );
 }

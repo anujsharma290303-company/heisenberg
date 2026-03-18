@@ -9,6 +9,7 @@ interface DesertParticle {
   y: number;
   z: number;
   speed: number;
+  type: 'amber' | 'white';
 }
 
 const X_RANGE = 780;
@@ -21,10 +22,11 @@ const createParticle = (): DesertParticle => ({
   x: randomInRange(-X_RANGE, X_RANGE),
   y: randomInRange(-Y_RANGE, Y_RANGE),
   z: randomInRange(-Z_RANGE, Z_RANGE),
-  speed: randomInRange(0.3, 1.2),
+  speed: randomInRange(0.1, 2.5),
+  type: Math.random() < 0.7 ? 'amber' : 'white',
 });
 
-export function DesertCanvas({ particleCount = 1400 }: DesertCanvasProps) {
+export function DesertCanvas({ particleCount = 1500 }: DesertCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
   const frameRef = useRef<number | null>(null);
@@ -68,21 +70,26 @@ export function DesertCanvas({ particleCount = 1400 }: DesertCanvasProps) {
           const scale = 300 / (300 + particle.z + 400);
           const sx = particle.x * scale + width / 2;
           const sy = particle.y * scale + height / 2;
-          const opacity = Math.max(0, Math.min(1, (particle.z + Z_RANGE) / (Z_RANGE * 2)));
-          const radius = Math.max(0.7, scale * 2.2);
+          const opacity = Math.max(0, Math.min(1, (particle.z + 200) / 300));
+          const radius = Math.max(1, scale * 3);
 
           context.beginPath();
-          context.fillStyle = `rgba(46, 204, 113, ${opacity})`;
+          context.fillStyle =
+            particle.type === 'amber'
+              ? `rgba(212, 160, 23, ${opacity})`
+              : `rgba(255, 255, 255, ${opacity * 0.3})`;
           context.arc(sx, sy, radius, 0, Math.PI * 2);
           context.fill();
 
           particle.x -= particle.speed;
+          particle.y -= particle.speed * 0.1;
 
           if (particle.x < -X_RANGE) {
             particle.x = X_RANGE;
             particle.y = randomInRange(-Y_RANGE, Y_RANGE);
             particle.z = randomInRange(-Z_RANGE, Z_RANGE);
-            particle.speed = randomInRange(0.3, 1.2);
+            particle.speed = randomInRange(0.1, 2.5);
+            particle.type = Math.random() < 0.7 ? 'amber' : 'white';
           }
         }
       }

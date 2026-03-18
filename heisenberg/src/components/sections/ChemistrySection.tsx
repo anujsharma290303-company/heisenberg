@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 
 import { MoleculeCanvas } from '../canvas/MoleculeCanvas';
 import { useTypedData } from '../../hooks/useTypedData';
@@ -105,11 +106,33 @@ export function ChemistrySection({ className }: ChemistrySectionProps) {
     .filter(Boolean)
     .join(' ');
 
+  const containerVariants = {
+    hidden: { opacity: 0, y: 24 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, staggerChildren: 0.15 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 24 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+  };
+
   return (
     <section id="section-04" className={rootClasses} ref={sectionRef}>
-      <div className={styles.inner}>
+      <motion.div
+        className={styles.inner}
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+      >
         <header className={styles.header}>
-          <p className={styles.kicker}>04 / THE SCIENCE</p>
+          <motion.p className={styles.kicker} data-reveal="1" variants={itemVariants}>
+            04 / THE SCIENCE
+          </motion.p>
         </header>
 
         {isLoading ? (
@@ -139,7 +162,7 @@ export function ChemistrySection({ className }: ChemistrySectionProps) {
         {!isLoading && !errorMessage ? (
           <div className={styles.layout}>
             <div className={styles.leftCol}>
-              <div className={styles.tilesGrid}>
+              <motion.div className={styles.tilesGrid} data-reveal="2" variants={itemVariants}>
                 {elements.map((element, index) => {
                   const isActive = activeElement === element.symbol;
                   const hasActive = activeElement !== null;
@@ -181,16 +204,16 @@ export function ChemistrySection({ className }: ChemistrySectionProps) {
                     </button>
                   );
                 })}
-              </div>
+              </motion.div>
 
               {activeElementData ? (
-                <div className={styles.connectionPanel} data-testid="connection-panel">
+                <motion.div className={styles.connectionPanel} data-testid="connection-panel" data-reveal="4" variants={itemVariants}>
                   <p className={styles.connectionNote}>{activeElementData.note}</p>
-                </div>
+                </motion.div>
               ) : null}
             </div>
 
-            <div className={styles.rightCol}>
+            <motion.div className={styles.rightCol} data-reveal="3" variants={itemVariants}>
               {resolvedMolecule ? <MoleculeCanvas molecule={resolvedMolecule} /> : null}
               <p className={styles.rotateHint}>DRAG TO ROTATE</p>
               {resolvedMolecule ? (
@@ -199,10 +222,10 @@ export function ChemistrySection({ className }: ChemistrySectionProps) {
                   <p className={styles.moleculeName}>{resolvedMolecule.name}</p>
                 </div>
               ) : null}
-            </div>
+            </motion.div>
           </div>
         ) : null}
-      </div>
+      </motion.div>
     </section>
   );
 }

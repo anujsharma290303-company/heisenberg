@@ -62,4 +62,85 @@ describe('DesertCanvas', () => {
 
     expect(disconnect).toHaveBeenCalled();
   });
+
+  it('renders amber and white particle variants for cinematic dust/smoke feel', () => {
+    const rafCallbacks: FrameRequestCallback[] = [];
+    vi.spyOn(globalThis, 'requestAnimationFrame').mockImplementation((callback: FrameRequestCallback) => {
+      rafCallbacks.push(callback);
+      return rafCallbacks.length;
+    });
+
+    const sequence = [
+      0.5, 0.5, 0.5, 0.5, 0.2,
+      0.5, 0.5, 0.5, 0.5, 0.95,
+    ];
+    let pointer = 0;
+    vi.spyOn(Math, 'random').mockImplementation(() => {
+      const value = sequence[pointer % sequence.length];
+      pointer += 1;
+      return value;
+    });
+
+    const fillStyles: string[] = [];
+    const contextStub = {
+      clearRect: vi.fn(),
+      beginPath: vi.fn(),
+      arc: vi.fn(),
+      fill: vi.fn(),
+      set fillStyle(value: string) {
+        fillStyles.push(value);
+      },
+      get fillStyle() {
+        return '';
+      },
+    } as unknown as CanvasRenderingContext2D;
+
+    vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockImplementation(
+      ((contextId: string) => (contextId === '2d' ? contextStub : null)) as unknown as HTMLCanvasElement['getContext']
+    );
+
+    render(<DesertCanvas particleCount={2} />);
+
+    const firstFrame = rafCallbacks[0];
+    if (firstFrame) {
+      firstFrame(0);
+    }
+
+    expect(fillStyles.some((style) => style.startsWith('rgba(212, 160, 23,'))).toBe(true);
+    expect(fillStyles.some((style) => style.startsWith('rgba(255, 255, 255,'))).toBe(true);
+  });
+
+  it('uses a minimum particle radius of 1 for far particles', () => {
+    const rafCallbacks: FrameRequestCallback[] = [];
+    vi.spyOn(globalThis, 'requestAnimationFrame').mockImplementation((callback: FrameRequestCallback) => {
+      rafCallbacks.push(callback);
+      return rafCallbacks.length;
+    });
+
+    const randomSpy = vi.spyOn(Math, 'random').mockReturnValue(1);
+    const arcSpy = vi.fn();
+    const contextStub = {
+      clearRect: vi.fn(),
+      beginPath: vi.fn(),
+      arc: arcSpy,
+      fill: vi.fn(),
+      fillStyle: '',
+    } as unknown as CanvasRenderingContext2D;
+
+    vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockImplementation(
+      ((contextId: string) => (contextId === '2d' ? contextStub : null)) as unknown as HTMLCanvasElement['getContext']
+    );
+
+    render(<DesertCanvas particleCount={1} />);
+
+    const firstFrame = rafCallbacks[0];
+    if (firstFrame) {
+      firstFrame(0);
+    }
+
+    const radius = arcSpy.mock.calls[0]?.[2] as number;
+    expect(radius).toBeGreaterThanOrEqual(1);
+
+    randomSpy.mockRestore();
+  });
 });

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 
 import { CharacterChip } from '../ui/CharacterChip';
 import { ToneFilterBar } from '../ui/ToneFilterBar';
@@ -110,29 +111,49 @@ export function QuotesSection({ className }: QuotesSectionProps) {
     .filter(Boolean)
     .join(' ');
 
+  const containerVariants = {
+    hidden: { opacity: 0, y: 24 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, staggerChildren: 0.15 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 24 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+  };
+
   return (
     <section id="section-03" className={rootClasses} ref={sectionRef}>
-      <div className={styles.inner}>
-        <header className={styles.header}>
+      <motion.div
+        className={styles.inner}
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+      >
+        <motion.header className={styles.header} data-reveal="1" variants={itemVariants}>
           <h2 className={styles.title}>Quotes Wall</h2>
           <p className={styles.count}>
             Results: <span data-testid="quotes-result-count">{resultCount}</span>
           </p>
-        </header>
+        </motion.header>
 
-        <div className={styles.controlBar}>
+        <motion.div className={styles.controlBar} data-reveal="2" variants={itemVariants}>
           <div className={styles.filterRow}>
             <ToneFilterBar active={toneFilter} onSelect={setTone} />
           </div>
           {selectedChar ? <CharacterChip character={selectedChar} onClear={clearChar} /> : null}
-        </div>
+        </motion.div>
 
         {loading ? (
-          <div className={styles.quotesGrid}>
+          <motion.div className={styles.quotesGrid} data-reveal="3" variants={itemVariants}>
             {Array.from({ length: 6 }).map((_, index) => (
               <div key={index} data-testid="quotes-shimmer" className={`skeleton shimmer ${styles.shimmer}`} />
             ))}
-          </div>
+          </motion.div>
         ) : null}
 
         {quotesState.status === 'error' ? (
@@ -155,16 +176,16 @@ export function QuotesSection({ className }: QuotesSectionProps) {
 
         {quotesState.status === 'success' && charactersState.status === 'success' ? (
           mappedQuotes.length > 0 ? (
-            <div className={styles.quotesGrid}>
+            <motion.div className={styles.quotesGrid} data-reveal="3" variants={itemVariants}>
               {mappedQuotes.map(({ quote, character }, index) => (
                 <QuoteCard key={quote.id} quote={quote} character={character} index={index} />
               ))}
-            </div>
+            </motion.div>
           ) : (
             <p className={styles.emptyText}>No quotes found.</p>
           )
         ) : null}
-      </div>
+      </motion.div>
     </section>
   );
 }
